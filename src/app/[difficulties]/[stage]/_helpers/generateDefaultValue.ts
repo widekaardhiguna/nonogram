@@ -1,7 +1,7 @@
 import { NodeVariant } from "@/components"
 
 const generateDefaultValue = (length: number) => {
-  const x: NodeVariant = "empty"
+  const x: NodeVariant = "-"
   let y: NodeVariant[] = []
   let z: NodeVariant[][] = []
 
@@ -12,7 +12,6 @@ const generateDefaultValue = (length: number) => {
   for (let i = 0; i < length; i++) {
     z = [...z, [...y]]
   }
-
   return z
 }
 

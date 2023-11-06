@@ -16,10 +16,10 @@ export const Nonogram = ({ rules, value, onChange }: NonogramProps) => {
   const onLeftClickNode = (xIndex: number, yIndex: number) => {
     let newValue = deepCopy(value)
     const nodeVariant = newValue[yIndex][xIndex]
-    if (nodeVariant === "empty" || nodeVariant === "untick") {
-      newValue[yIndex][xIndex] = "tick"
+    if (nodeVariant === "-" || nodeVariant === "x") {
+      newValue[yIndex][xIndex] = "o"
     } else {
-      newValue[yIndex][xIndex] = "empty"
+      newValue[yIndex][xIndex] = "-"
     }
     onChange?.(newValue)
   }
@@ -28,10 +28,10 @@ export const Nonogram = ({ rules, value, onChange }: NonogramProps) => {
     let newValue = deepCopy(value)
     // console.log(xIndex, yIndex, newValue)
     const nodeVariant = newValue[yIndex][xIndex]
-    if (nodeVariant === "untick") {
-      newValue[yIndex][xIndex] = "empty"
+    if (nodeVariant === "x") {
+      newValue[yIndex][xIndex] = "-"
     } else {
-      newValue[yIndex][xIndex] = "untick"
+      newValue[yIndex][xIndex] = "x"
     }
     onChange?.(newValue)
   }

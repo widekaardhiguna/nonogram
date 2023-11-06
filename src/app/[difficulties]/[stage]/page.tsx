@@ -5,28 +5,18 @@ import deepCopy from "@/helpers/deepCopy"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import generateDefaultValue from "./_helpers/generateDefaultValue"
+import stages from "@/assets/stages/stages.json"
+import { DifficultiesPageProps } from "../page"
 
-const arr = {
-  x: [[3], [2], [2], [2, 2], [1, 1]],
-  y: [[2], [1], [2], [4], [1, 3]],
+type StagePageProps = {
+  params: DifficultiesPageProps["params"] & {
+    stage: "1"
+  }
 }
 
-const solution: NodeVariant[][] = [
-  ["empty", "empty", "empty", "tick", "tick"],
-  ["empty", "empty", "empty", "tick", "empty"],
-  ["tick", "tick", "empty", "empty", "empty"],
-  ["tick", "tick", "tick", "tick", "empty"],
-  ["tick", "empty", "tick", "tick", "tick"],
-]
-
-const defaultValue = generateDefaultValue(arr.x.length)
-
-type PageProps = {
-  params: {}
-}
-
-export default function Page({ params }: PageProps) {
-  const [val, setVal] = useState(defaultValue)
+export default function StagePage({ params }: StagePageProps) {
+  const game = stages[params.difficulties][params.stage]
+  const [val, setVal] = useState(generateDefaultValue(game.solution.length))
 
   const onChangeNonogram = (value: NodeVariant[][]) => {
     setVal(value)
@@ -36,16 +26,16 @@ export default function Page({ params }: PageProps) {
     let newVal = deepCopy(val)
     for (let i in newVal) {
       for (let j in newVal[i]) {
-        if (newVal[i][j] === "untick") {
-          newVal[i][j] = "empty"
+        if (newVal[i][j] === "x") {
+          newVal[i][j] = "-"
         }
       }
     }
 
     const valString = newVal.toString()
-    const solutionString = solution.toString()
+    const solutionString = game.solution.toString()
     console.log(newVal)
-    console.log(solution)
+    console.log(game.solution)
     if (valString === solutionString) {
       console.log("win")
     }
@@ -54,7 +44,7 @@ export default function Page({ params }: PageProps) {
   return (
     <main className="flex justify-center items-center h-screen">
       <div>
-        <Nonogram rules={arr} value={val} onChange={onChangeNonogram} />
+        <Nonogram rules={game.rule} value={val} onChange={onChangeNonogram} />
       </div>
     </main>
   )

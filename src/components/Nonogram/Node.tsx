@@ -1,4 +1,4 @@
-export type NodeVariant = "tick" | "untick" | "empty"
+export type NodeVariant = "o" | "x" | "-"
 
 type NodeProps = {
   variant?: NodeVariant
@@ -6,20 +6,16 @@ type NodeProps = {
   onContextMenu?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-export const Node = ({
-  onClick,
-  onContextMenu,
-  variant = "empty",
-}: NodeProps) => {
+export const Node = ({ onClick, onContextMenu, variant = "-" }: NodeProps) => {
   return (
     <button
       className="block h-20 w-20"
       onClick={onClick}
       onContextMenu={onContextMenu}
     >
-      {variant === "tick" && <Tick />}
-      {variant === "untick" && <Untick />}
-      {variant === "empty" && <Empty />}
+      {variant === "o" && <Tick />}
+      {variant === "x" && <Untick />}
+      {variant === "-" && <Empty />}
     </button>
   )
 }

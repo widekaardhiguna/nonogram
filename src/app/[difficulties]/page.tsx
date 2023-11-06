@@ -1,12 +1,12 @@
 import Link from "next/link"
 
-type DifficultiesProps = {
+export type DifficultiesPageProps = {
   params: {
-    difficulties: string
+    difficulties: "easy" | "medium" | "hard"
   }
 }
 
-export default function DifficultiesPage({ params }: DifficultiesProps) {
+export default function DifficultiesPage({ params }: DifficultiesPageProps) {
   return (
     <main className="flex justify-center items-center h-screen">
       <div>
