@@ -3,5 +3,5 @@ type CellNodeProps = {
 }
 
 export const CellNode = ({ children }: CellNodeProps) => {
-  return <td className="border-2 border-slate-500 p-0">{children}</td>
+  return <td className="border-2 border-neutral-700 p-0">{children}</td>
 }
