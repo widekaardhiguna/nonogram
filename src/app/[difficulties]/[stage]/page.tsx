@@ -42,7 +42,7 @@ export default function StagePage({ params }: StagePageProps) {
   }, [val])
 
   return (
-    <main className="flex justify-center items-center h-screen">
+    <main className="flex justify-center items-center h-full">
       <div>
         <Nonogram rules={game.rule} value={val} onChange={onChangeNonogram} />
       </div>

@@ -1,3 +1,5 @@
+import { cva, cx } from "class-variance-authority"
+
 export type NodeVariant = "o" | "x" | "-"
 
 type NodeProps = {
@@ -9,7 +11,7 @@ type NodeProps = {
 export const Node = ({ onClick, onContextMenu, variant = "-" }: NodeProps) => {
   return (
     <button
-      className="block h-20 w-20"
+      className={rootClass}
       onClick={onClick}
       onContextMenu={onContextMenu}
     >
@@ -35,3 +37,9 @@ const Untick = () => {
 const Empty = () => {
   return <span className="block h-full w-full"></span>
 }
+
+const rootClass = cx(
+  ["block h-12 w-12"],
+  ["md:h-16 md:w-16"],
+  ["lg:h-20 lg:w-20"]
+)

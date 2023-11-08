@@ -6,7 +6,7 @@ type CellHintProps = HintWrapperVariant & {
 
 export const CellHint = ({ hints, direction }: CellHintProps) => {
   return (
-    <th className="border-2 border-neutral-700 p-1 text-white">
+    <th className="border-2 border-neutral-700 p-1 text-white font-semibold">
       <div className={hintWrapperClass({ direction: direction })}>
         {hints?.map((hint, index) => (
           <div key={index}>{hint}</div>

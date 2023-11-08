@@ -41,36 +41,34 @@ export const Nonogram = ({ rules, value, onChange }: NonogramProps) => {
   }
 
   return (
-    <div>
-      <table className="border-collapse">
-        <tbody>
-          <tr>
-            <th />
-            {rules.x.map((hints, index) => (
-              <CellHint direction="column" key={index} hints={hints} />
+    <table className="border-collapse">
+      <tbody>
+        <tr>
+          <th />
+          {rules.x.map((hints, index) => (
+            <CellHint direction="column" key={index} hints={hints} />
+          ))}
+        </tr>
+        {rules.y.map((hints, yIndex) => (
+          <tr key={yIndex}>
+            <CellHint direction="row" hints={hints} />
+            {rules.x.map((_, xIndex) => (
+              <CellNode key={xIndex}>
+                <Node
+                  variant={getCurrentNodeVariant(xIndex, yIndex)}
+                  onClick={() => {
+                    onLeftClickNode(xIndex, yIndex)
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault()
+                    onRightClickNode(xIndex, yIndex)
+                  }}
+                />
+              </CellNode>
             ))}
           </tr>
-          {rules.y.map((hints, yIndex) => (
-            <tr key={yIndex}>
-              <CellHint direction="row" hints={hints} />
-              {rules.x.map((_, xIndex) => (
-                <CellNode key={xIndex}>
-                  <Node
-                    variant={getCurrentNodeVariant(xIndex, yIndex)}
-                    onClick={() => {
-                      onLeftClickNode(xIndex, yIndex)
-                    }}
-                    onContextMenu={(e) => {
-                      e.preventDefault()
-                      onRightClickNode(xIndex, yIndex)
-                    }}
-                  />
-                </CellNode>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+        ))}
+      </tbody>
+    </table>
   )
 }
