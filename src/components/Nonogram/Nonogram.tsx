@@ -45,14 +45,14 @@ export const Nonogram = ({ rules, value, onChange }: NonogramProps) => {
       <table className="border-collapse">
         <tbody>
           <tr>
-            <CellHint />
+            <th />
             {rules.x.map((hints, index) => (
-              <CellHint key={index}>{hints}</CellHint>
+              <CellHint direction="column" key={index} hints={hints} />
             ))}
           </tr>
           {rules.y.map((hints, yIndex) => (
             <tr key={yIndex}>
-              <CellHint>{hints}</CellHint>
+              <CellHint direction="row" hints={hints} />
               {rules.x.map((_, xIndex) => (
                 <CellNode key={xIndex}>
                   <Node
