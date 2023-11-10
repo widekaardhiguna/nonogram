@@ -15,13 +15,17 @@ export const Button = ({
   size,
   children,
   color,
+  variant,
   className,
   leftIcon,
   rightIcon,
   ...props
 }: ButtonProps) => {
   return (
-    <button className={rootClass({ size, color, className })} {...props}>
+    <button
+      className={rootClass({ size, color, variant, className })}
+      {...props}
+    >
       <div className={flexClass}>
         {leftIcon && <span className={iconWrapperClass}>{leftIcon}</span>}
         {children}

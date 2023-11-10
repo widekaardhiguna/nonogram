@@ -1,13 +1,15 @@
 "use client"
 
-import { Nonogram, NodeVariant, IconButton, Button } from "@/components"
+import { Nonogram, NodeVariant, Button } from "@/components"
 import deepCopy from "@/helpers/deepCopy"
-import Link from "next/link"
 import { useEffect, useState } from "react"
 import generateDefaultValue from "./_helpers/generateDefaultValue"
 import stages from "@/assets/stages/stages.json"
 import { DifficultiesPageProps } from "../page"
-import { IconReload, IconChevronRight } from "@tabler/icons-react"
+import { IconChevronRight, IconSquareX } from "@tabler/icons-react"
+import IconLeftClick from "@/assets/icons/IconLeftClick"
+import IconRightClick from "@/assets/icons/IconRightClick"
+import { cx } from "class-variance-authority"
 
 type StagePageProps = {
   params: DifficultiesPageProps["params"] & {
@@ -43,24 +45,62 @@ export default function StagePage({ params }: StagePageProps) {
   }, [val])
 
   return (
-    <main className="flex justify-center items-center h-full">
+    <main className="grid items-center justify-center h-full w-full">
       <div>
-        <div className="text-white text-center mb-10">Time passed: 00:04</div>
-        <Nonogram rules={game.rule} value={val} onChange={onChangeNonogram} />
-        <div className="flex flex-col items-end gap-1 mt-4">
-          <Button className="px-0" color="secondary" rightIcon={<IconReload />}>
-            Clear
-          </Button>
-          <Button
-            className="px-0"
-            color="primary"
-            rightIcon={<IconChevronRight />}
-          >
-            Next Stage
-          </Button>
+        <div className={cx("text-white text-center", "xl:mb-6")}>
+          Time passed: 00:04
         </div>
-        <br />
+        <div
+          className={cx(
+            "grid grid-cols-[1fr] gap-y-5 gap-x-8",
+            "xl:grid-cols-[1fr_auto_1fr]"
+          )}
+        >
+          <div></div>
+          <div>
+            <Nonogram
+              rules={game.rule}
+              value={val}
+              onChange={onChangeNonogram}
+            />
+          </div>
+          <div>
+            <div className={cx("hidden mb-4", "xl:block")}>
+              <div className={hintClass}>
+                <IconLeftClick height="1.2rem" width="1.2rem" />
+                <p>Left click: to fill the square</p>
+              </div>
+              <div className={hintClass}>
+                <IconRightClick height="1.2rem" width="1.2rem" />
+                <p>
+                  Right click: to mark the square with
+                  <span className="text-red-600"> X</span>
+                </p>
+              </div>
+            </div>
+            <p className="text-white mb-6">Your first clear time: --:--</p>
+            <div className={cx("flex gap-2 justify-end", "xl:justify-normal")}>
+              <Button
+                size="small"
+                color="secondary"
+                variant="outlined"
+                rightIcon={<IconSquareX />}
+              >
+                Clear
+              </Button>
+              <Button
+                size="small"
+                color="primary"
+                rightIcon={<IconChevronRight />}
+              >
+                Next Stage
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   )
 }
+
+const hintClass = cx("flex gap-1 items-center text-md text-secondary-200 mb-2")

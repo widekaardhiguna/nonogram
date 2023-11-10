@@ -10,13 +10,46 @@ export const rootClass = cva(
         large: "text-lg",
       },
       color: {
-        primary: "text-primary-400 hover:text-primary-600",
-        secondary: "text-white hover:text-primary-400",
+        // primary: "text-primary-400 hover:text-primary-600",
+        // secondary: "text-white hover:text-primary-400",
+        // primary: "text-neutral-900 bg-primary-400 hover:bg-primary-500",
+        // secondary: "text-secondary-900 bg-secondary-50 hover:bg-secondary-300",
+        primary: "",
+        secondary: "",
+      },
+      variant: {
+        filled: "",
+        outlined: "",
       },
     },
+    compoundVariants: [
+      {
+        variant: "filled",
+        color: "primary",
+        class: "text-neutral-900 bg-primary-400 hover:bg-primary-500",
+      },
+      {
+        variant: "filled",
+        color: "secondary",
+        class: "text-secondary-900 bg-secondary-50 hover:bg-secondary-300",
+      },
+      {
+        variant: "outlined",
+        color: "primary",
+        class:
+          "text-primary-400 border border-primary-400 hover:bg-primary-100/30",
+      },
+      {
+        variant: "outlined",
+        color: "secondary",
+        class:
+          "text-secondary-50 border border-secondary-50 hover:bg-secondary-100/30",
+      },
+    ],
     defaultVariants: {
       size: "medium",
       color: "primary",
+      variant: "filled",
     },
   }
 )
