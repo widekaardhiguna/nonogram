@@ -37,7 +37,7 @@ export default function RootLayout({
               "xl:h-[90vh] xl:w-[1400px]"
             )}
           >
-            <div className={cx("absolute flex w-full", "xl:px-4 xl:py-2")}>
+            <div className={cx("absolute flex w-full", "xl:px-4 xl:py-4")}>
               <div>
                 <Link href=".">
                   <IconChevronLeft className="text-white" />

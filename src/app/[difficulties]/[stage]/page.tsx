@@ -1,8 +1,7 @@
 "use client"
 
 import { Nonogram, NodeVariant, Button } from "@/components"
-import deepCopy from "@/helpers/deepCopy"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import generateDefaultValue from "./_helpers/generateDefaultValue"
 import stages from "@/assets/stages/stages.json"
 import { DifficultiesPageProps } from "../page"
@@ -10,6 +9,10 @@ import { IconChevronRight, IconSquareX } from "@tabler/icons-react"
 import IconLeftClick from "@/assets/icons/IconLeftClick"
 import IconRightClick from "@/assets/icons/IconRightClick"
 import { cx } from "class-variance-authority"
+import generateRule from "./_helpers/generateRule"
+import clearUntick from "./_helpers/clearUntick"
+import isEqual from "@/helpers/isEqual"
+import generateRandomSolution from "./_helpers/generateRandomSolution"
 
 type StagePageProps = {
   params: DifficultiesPageProps["params"] & {
@@ -17,29 +20,36 @@ type StagePageProps = {
   }
 }
 
+const randomSol = generateRandomSolution(5, 7)
+
 export default function StagePage({ params }: StagePageProps) {
+  // console.log(generateRandomSolution(5, 7))
+
+  // const { randomSol, rule } = useMemo(() => {
+  //   const sol = generateRandomSolution(5, 6)
+  //   const rl = generateRule(sol)
+
+  //   return {
+  //     randomSol: sol,
+  //     rule: rl,
+  //   }
+  // }, [])
+  // const randomSol = generateRandomSolution(5, 7)
+  // console.log(game.solution)
+
   const game = stages[params.difficulties][params.stage]
   const [val, setVal] = useState(generateDefaultValue(game.solution.length))
+
+  const rule = generateRule(game.solution)
 
   const onChangeNonogram = (value: NodeVariant[][]) => {
     setVal(value)
   }
 
   useEffect(() => {
-    let newVal = deepCopy(val)
-    for (let i in newVal) {
-      for (let j in newVal[i]) {
-        if (newVal[i][j] === "x") {
-          newVal[i][j] = "-"
-        }
-      }
-    }
+    const clearedVal = clearUntick(val)
 
-    const valString = newVal.toString()
-    const solutionString = game.solution.toString()
-    console.log(newVal)
-    console.log(game.solution)
-    if (valString === solutionString) {
+    if (isEqual(clearedVal, game.solution)) {
       console.log("win")
     }
   }, [val])
@@ -52,17 +62,13 @@ export default function StagePage({ params }: StagePageProps) {
         </div>
         <div
           className={cx(
-            "grid grid-cols-[1fr] gap-y-5 gap-x-8",
+            "grid grid-cols-[1fr] gap-y-5 gap-x-12",
             "xl:grid-cols-[1fr_auto_1fr]"
           )}
         >
           <div></div>
           <div>
-            <Nonogram
-              rules={game.rule}
-              value={val}
-              onChange={onChangeNonogram}
-            />
+            <Nonogram rules={rule} value={val} onChange={onChangeNonogram} />
           </div>
           <div>
             <div className={cx("hidden mb-4", "xl:block")}>
