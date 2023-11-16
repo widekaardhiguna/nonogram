@@ -13,6 +13,15 @@ import generateRule from "./_helpers/generateRule"
 import clearUntick from "./_helpers/clearUntick"
 import isEqual from "@/helpers/isEqual"
 import generateRandomSolution from "./_helpers/generateRandomSolution"
+import useStageStore from "@/stores/stage-store/useStageStore"
+
+import Timer from "./_components/Timer"
+import usePersistStore from "@/hooks/usePersistStore"
+import { selectStage } from "@/stores/stage-store/stage-store-selector/selectStage"
+import FirstTimeClear from "./_components/FirstTimeClear"
+import useTimer from "@/hooks/useTimer"
+import HowToPlay from "./_components/HowToPlay"
+import Link from "next/link"
 
 type StagePageProps = {
   params: DifficultiesPageProps["params"] & {
@@ -37,6 +46,24 @@ export default function StagePage({ params }: StagePageProps) {
   // const randomSol = generateRandomSolution(5, 7)
   // console.log(game.solution)
 
+  // Store
+  const selectedStage = usePersistStore(useStageStore, (state) =>
+    selectStage(state.stages, params.stage, params.difficulties)
+  )
+
+  const newStage = useStageStore((state) => state.newStage)
+  const restartStage = useStageStore((state) => state.restartStage)
+  const setStageFirstClear = useStageStore((state) => state.setStageFirstClear)
+  const setStageFinish = useStageStore((state) => state.setStageFinish)
+  const setStageClearDate = useStageStore((state) => state.setStageClearDate)
+
+  // console.log(selectedStage)
+  //
+
+  const { duration, stopTimer } = useTimer({
+    start: selectedStage?.startDate ? new Date(selectedStage.startDate) : null,
+  })
+
   const game = stages[params.difficulties][params.stage]
   const [val, setVal] = useState(generateDefaultValue(game.solution.length))
 
@@ -46,20 +73,47 @@ export default function StagePage({ params }: StagePageProps) {
     setVal(value)
   }
 
+  const onClear = () => {
+    setVal(generateDefaultValue(game.solution.length))
+  }
+
+  // const onRestart = () => {
+  //   setIsFinished(false)
+  //   onClear()
+  // }
+
+  const [isFinished, setIsFinished] = useState(false)
+
+  const onFinished = () => {
+    setStageFinish(params.stage, params.difficulties)
+    setStageFirstClear(params.stage, params.difficulties)
+    setStageClearDate(params.stage, params.difficulties)
+    setIsFinished(true)
+    stopTimer()
+  }
+
   useEffect(() => {
     const clearedVal = clearUntick(val)
 
     if (isEqual(clearedVal, game.solution)) {
-      console.log("win")
+      onFinished()
     }
   }, [val])
+
+  useEffect(() => {
+    if (selectedStage) {
+      if (!isFinished) {
+        restartStage(params.stage, params.difficulties)
+      }
+    } else {
+      newStage(params.stage, params.difficulties)
+    }
+  }, [selectedStage, isFinished])
 
   return (
     <main className="grid items-center justify-center h-full w-full">
       <div>
-        <div className={cx("text-white text-center", "xl:mb-6")}>
-          Time passed: 00:04
-        </div>
+        <Timer duration={duration} />
         <div
           className={cx(
             "grid grid-cols-[1fr] gap-y-5 gap-x-12",
@@ -71,36 +125,41 @@ export default function StagePage({ params }: StagePageProps) {
             <Nonogram rules={rule} value={val} onChange={onChangeNonogram} />
           </div>
           <div>
-            <div className={cx("hidden mb-4", "xl:block")}>
-              <div className={hintClass}>
-                <IconLeftClick height="1.2rem" width="1.2rem" />
-                <p>Left click: to fill the square</p>
-              </div>
-              <div className={hintClass}>
-                <IconRightClick height="1.2rem" width="1.2rem" />
-                <p>
-                  Right click: to mark the square with
-                  <span className="text-red-600"> X</span>
-                </p>
-              </div>
-            </div>
-            <p className="text-white mb-6">Your first clear time: --:--</p>
+            <HowToPlay />
+            <FirstTimeClear duration={selectedStage?.firstClearTime} />
             <div className={cx("flex gap-2 justify-end", "xl:justify-normal")}>
-              <Button
-                size="small"
-                color="secondary"
-                variant="outlined"
-                rightIcon={<IconSquareX />}
-              >
-                Clear
-              </Button>
-              <Button
-                size="small"
-                color="primary"
-                rightIcon={<IconChevronRight />}
-              >
-                Next Stage
-              </Button>
+              {isFinished ? (
+                <>
+                  {/* <Button
+                    size="small"
+                    color="secondary"
+                    variant="outlined"
+                    rightIcon={<IconSquareX />}
+                    onClick={onRestart}
+                  >
+                    Restart
+                  </Button> */}
+                  <Link href="./2">
+                    <Button
+                      size="small"
+                      color="primary"
+                      rightIcon={<IconChevronRight />}
+                    >
+                      Next Stage
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <Button
+                  size="small"
+                  color="secondary"
+                  variant="outlined"
+                  rightIcon={<IconSquareX />}
+                  onClick={onClear}
+                >
+                  Clear
+                </Button>
+              )}
             </div>
           </div>
         </div>
@@ -108,5 +167,3 @@ export default function StagePage({ params }: StagePageProps) {
     </main>
   )
 }
-
-const hintClass = cx("flex gap-1 items-center text-md text-secondary-200 mb-2")

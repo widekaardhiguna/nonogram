@@ -1,10 +1,11 @@
 import StageButton from "./_components/StageButton"
 import { cx } from "class-variance-authority"
 import stages from "@/assets/stages/stages.json"
+import { Difficulty } from "@/stores/stage-store/stage-store.types"
 
 export type DifficultiesPageProps = {
   params: {
-    difficulties: "easy" | "medium" | "hard"
+    difficulties: Difficulty
   }
 }
 
