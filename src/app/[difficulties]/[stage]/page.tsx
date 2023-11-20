@@ -51,8 +51,6 @@ export default function StagePage({ params }: StagePageProps) {
     (games) => games.id === params.stage
   )
 
-  if (!game) return <>Not Found</>
-
   // Store
   const selectedStage = usePersistStore(useStageStore, (state) =>
     selectStage(state.stages, params.stage, params.difficulties)
@@ -71,16 +69,18 @@ export default function StagePage({ params }: StagePageProps) {
     start: selectedStage?.startDate ? new Date(selectedStage.startDate) : null,
   })
 
-  const [val, setVal] = useState(generateDefaultValue(game.solution.length))
+  const [val, setVal] = useState(
+    generateDefaultValue(game?.solution.length ?? 0)
+  )
 
-  const rule = generateRule(game.solution)
+  const rule = generateRule(game?.solution ?? [[]])
 
   const onChangeNonogram = (value: NodeVariant[][]) => {
     setVal(value)
   }
 
   const onClear = () => {
-    setVal(generateDefaultValue(game.solution.length))
+    setVal(generateDefaultValue(game?.solution.length ?? 0))
   }
 
   // const onRestart = () => {
@@ -101,7 +101,7 @@ export default function StagePage({ params }: StagePageProps) {
   useEffect(() => {
     const clearedVal = clearUntick(val)
 
-    if (isEqual(clearedVal, game.solution)) {
+    if (isEqual(clearedVal, game?.solution ?? {})) {
       onFinished()
     }
   }, [val])
