@@ -7,6 +7,7 @@ import { Difficulty } from "@/stores/stage-store/stage-store.types"
 import usePersistStore from "@/hooks/usePersistStore"
 import useStageStore from "@/stores/stage-store/useStageStore"
 import { useMemo } from "react"
+import { finishedStages } from "@/stores/stage-store/stage-store-selector/finishedStages"
 
 export type DifficultiesPageProps = {
   params: {
@@ -18,20 +19,24 @@ export default function DifficultiesPage({ params }: DifficultiesPageProps) {
   const stages = game[params.difficulties]
 
   const storedStages = usePersistStore(useStageStore, (state) => state.stages)
+  const finishedStagesTotal = usePersistStore(
+    useStageStore,
+    (state) => finishedStages(state.stages, params.difficulties).length
+  )
 
-  const completedTotal = useMemo(() => {
-    const arr = storedStages?.filter(
-      (stage) =>
-        stage.difficulty === params.difficulties &&
-        stage.firstClearTime !== null
-    )
-    return arr?.length
-  }, [storedStages])
+  // const completedTotal = useMemo(() => {
+  //   const arr = storedStages?.filter(
+  //     (stage) =>
+  //       stage.difficulty === params.difficulties &&
+  //       stage.firstClearTime !== null
+  //   )
+  //   return arr?.length
+  // }, [storedStages])
 
   const availableStages = useMemo(() => {
-    if (typeof completedTotal !== "number") return null
-    return stages.slice(0, completedTotal + 1)
-  }, [stages, completedTotal])
+    if (typeof finishedStagesTotal !== "number") return null
+    return stages.slice(0, finishedStagesTotal + 1)
+  }, [stages, finishedStagesTotal])
 
   const isFinished = (id: string) => {
     const finishedStage = storedStages?.find(
@@ -50,7 +55,7 @@ export default function DifficultiesPage({ params }: DifficultiesPageProps) {
           SELECT STAGE
         </h1>
         <p className="text-center text-white mb-10 text-md">
-          {completedTotal} of 12 stages completed.
+          {finishedStagesTotal} of 12 stages completed.
         </p>
         <nav
           className={cx(

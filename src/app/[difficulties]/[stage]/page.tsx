@@ -24,7 +24,7 @@ import HowToPlay from "./_components/HowToPlay"
 import Link from "next/link"
 import FinishedTime from "./_components/FinishedTime"
 
-type StagePageProps = {
+export type StagePageProps = {
   params: DifficultiesPageProps["params"] & {
     stage: string
   }
