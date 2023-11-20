@@ -24,15 +24,6 @@ export default function DifficultiesPage({ params }: DifficultiesPageProps) {
     (state) => finishedStages(state.stages, params.difficulties).length
   )
 
-  // const completedTotal = useMemo(() => {
-  //   const arr = storedStages?.filter(
-  //     (stage) =>
-  //       stage.difficulty === params.difficulties &&
-  //       stage.firstClearTime !== null
-  //   )
-  //   return arr?.length
-  // }, [storedStages])
-
   const availableStages = useMemo(() => {
     if (typeof finishedStagesTotal !== "number") return null
     return stages.slice(0, finishedStagesTotal + 1)
@@ -55,7 +46,7 @@ export default function DifficultiesPage({ params }: DifficultiesPageProps) {
           SELECT STAGE
         </h1>
         <p className="text-center text-white mb-10 text-md">
-          {finishedStagesTotal} of 12 stages completed.
+          {finishedStagesTotal} of {stages.length} stages completed.
         </p>
         <nav
           className={cx(

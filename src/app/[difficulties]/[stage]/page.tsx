@@ -30,7 +30,7 @@ export type StagePageProps = {
   }
 }
 
-const randomSol = generateRandomSolution(5, 7)
+const randomSol = generateRandomSolution(4, 6)
 
 export default function StagePage({ params }: StagePageProps) {
   // console.log(generateRandomSolution(5, 7))

@@ -23,7 +23,7 @@ export default function StageLayout({ children, params }: StageLayoutProps) {
     (state) => finishedStages(state.stages, params.difficulties).length
   )
 
-  if (!finishedStagesTotal) return <></>
+  if (typeof finishedStagesTotal !== "number") return <></>
 
   const isOverStepping = parseInt(params.stage) > finishedStagesTotal + 1
 
