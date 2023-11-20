@@ -22,6 +22,7 @@ import FirstTimeClear from "./_components/FirstTimeClear"
 import useTimer from "@/hooks/useTimer"
 import HowToPlay from "./_components/HowToPlay"
 import Link from "next/link"
+import FinishedTime from "./_components/FinishedTime"
 
 type StagePageProps = {
   params: DifficultiesPageProps["params"] & {
@@ -110,10 +111,21 @@ export default function StagePage({ params }: StagePageProps) {
     }
   }, [selectedStage, isFinished])
 
+  const nextStage = () => {
+    // TO DO: Change JSON stages to array object
+    const totalStages = stages[params.difficulties]
+    const currentStage = parseInt(params.stage)
+    return (currentStage + 1).toString()
+  }
+
   return (
     <main className="grid items-center justify-center h-full w-full">
       <div>
-        <Timer duration={duration} />
+        {isFinished ? (
+          <FinishedTime duration={duration} />
+        ) : (
+          <Timer duration={duration} />
+        )}
         <div
           className={cx(
             "grid grid-cols-[1fr] gap-y-5 gap-x-12",
@@ -139,7 +151,7 @@ export default function StagePage({ params }: StagePageProps) {
                   >
                     Restart
                   </Button> */}
-                  <Link href="./2">
+                  <Link href={`./${nextStage()}`}>
                     <Button
                       size="small"
                       color="primary"

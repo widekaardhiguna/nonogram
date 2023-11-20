@@ -1,3 +1,4 @@
+import getClearTime from "@/helpers/getClearTime"
 import { Duration } from "date-fns"
 
 type FirstTimeClearProps = {
@@ -7,8 +8,7 @@ type FirstTimeClearProps = {
 const FirstTimeClear = ({ duration }: FirstTimeClearProps) => {
   return (
     <p className="text-white mb-6">
-      Your first clear time: {duration?.hours}:{duration?.minutes}:
-      {duration?.seconds}
+      Your first clear time: {getClearTime(duration)}
     </p>
   )
 }
