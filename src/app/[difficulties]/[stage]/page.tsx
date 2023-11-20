@@ -26,7 +26,7 @@ import FinishedTime from "./_components/FinishedTime"
 
 type StagePageProps = {
   params: DifficultiesPageProps["params"] & {
-    stage: "1"
+    stage: string
   }
 }
 
@@ -47,6 +47,12 @@ export default function StagePage({ params }: StagePageProps) {
   // const randomSol = generateRandomSolution(5, 7)
   // console.log(game.solution)
 
+  const game = stages[params.difficulties].find(
+    (games) => games.id === params.stage
+  )
+
+  if (!game) return <>Not Found</>
+
   // Store
   const selectedStage = usePersistStore(useStageStore, (state) =>
     selectStage(state.stages, params.stage, params.difficulties)
@@ -65,7 +71,6 @@ export default function StagePage({ params }: StagePageProps) {
     start: selectedStage?.startDate ? new Date(selectedStage.startDate) : null,
   })
 
-  const game = stages[params.difficulties][params.stage]
   const [val, setVal] = useState(generateDefaultValue(game.solution.length))
 
   const rule = generateRule(game.solution)
@@ -112,10 +117,11 @@ export default function StagePage({ params }: StagePageProps) {
   }, [selectedStage, isFinished])
 
   const nextStage = () => {
-    // TO DO: Change JSON stages to array object
     const totalStages = stages[params.difficulties]
     const currentStage = parseInt(params.stage)
-    return (currentStage + 1).toString()
+    const next = `./${(currentStage + 1).toString()}`
+    const home = "/"
+    return currentStage >= totalStages.length ? home : next
   }
 
   return (
@@ -151,7 +157,7 @@ export default function StagePage({ params }: StagePageProps) {
                   >
                     Restart
                   </Button> */}
-                  <Link href={`./${nextStage()}`}>
+                  <Link href={nextStage()}>
                     <Button
                       size="small"
                       color="primary"

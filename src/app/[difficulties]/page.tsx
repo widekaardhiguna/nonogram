@@ -1,7 +1,12 @@
+"use client"
+
 import StageButton from "./_components/StageButton"
 import { cx } from "class-variance-authority"
-import stages from "@/assets/stages/stages.json"
+import game from "@/assets/stages/stages.json"
 import { Difficulty } from "@/stores/stage-store/stage-store.types"
+import usePersistStore from "@/hooks/usePersistStore"
+import useStageStore from "@/stores/stage-store/useStageStore"
+import { useMemo } from "react"
 
 export type DifficultiesPageProps = {
   params: {
@@ -10,8 +15,34 @@ export type DifficultiesPageProps = {
 }
 
 export default function DifficultiesPage({ params }: DifficultiesPageProps) {
-  const game = stages[params.difficulties]
-  const stageIds = Object.keys(game)
+  const stages = game[params.difficulties]
+
+  const storedStages = usePersistStore(useStageStore, (state) => state.stages)
+
+  const completedTotal = useMemo(() => {
+    const arr = storedStages?.filter(
+      (stage) =>
+        stage.difficulty === params.difficulties &&
+        stage.firstClearTime !== null
+    )
+    return arr?.length
+  }, [storedStages])
+
+  const availableStages = useMemo(() => {
+    if (typeof completedTotal !== "number") return null
+    return stages.slice(0, completedTotal + 1)
+  }, [stages, completedTotal])
+
+  const isFinished = (id: string) => {
+    const finishedStage = storedStages?.find(
+      (stage) =>
+        stage.id === id &&
+        stage.difficulty === params.difficulties &&
+        stage.firstClearTime !== null
+    )
+    return Boolean(finishedStage)
+  }
+
   return (
     <main className="h-full pt-14">
       <div>
@@ -19,7 +50,7 @@ export default function DifficultiesPage({ params }: DifficultiesPageProps) {
           SELECT STAGE
         </h1>
         <p className="text-center text-white mb-10 text-md">
-          0 of 12 stages completed.
+          {completedTotal} of 12 stages completed.
         </p>
         <nav
           className={cx(
@@ -28,13 +59,18 @@ export default function DifficultiesPage({ params }: DifficultiesPageProps) {
             "lg:max-w-2xl lg:gap-y-4"
           )}
         >
-          {stageIds.map((id) => (
-            <div key={id} className="flex place-content-center">
-              <StageButton href={`/${params.difficulties}/${id}`}>
-                {params.difficulties} {id}
-              </StageButton>
-            </div>
-          ))}
+          {availableStages?.map((stage) => {
+            return (
+              <div key={stage.id} className="flex place-content-center">
+                <StageButton
+                  variant={isFinished(stage.id) ? "finished" : "unfinished"}
+                  href={`/${params.difficulties}/${stage.id}`}
+                >
+                  {params.difficulties} {stage.id}
+                </StageButton>
+              </div>
+            )
+          })}
         </nav>
       </div>
     </main>
