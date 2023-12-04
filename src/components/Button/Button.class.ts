@@ -20,6 +20,7 @@ export const rootClass = cva(
       variant: {
         filled: "",
         outlined: "",
+        text: "",
       },
     },
     compoundVariants: [
@@ -44,6 +45,16 @@ export const rootClass = cva(
         color: "secondary",
         class:
           "text-secondary-50 border border-secondary-50 hover:bg-secondary-100/30",
+      },
+      {
+        variant: "text",
+        color: "primary",
+        class: "text-primary-400 hover:bg-primary-100/30",
+      },
+      {
+        variant: "text",
+        color: "secondary",
+        class: "text-secondary-50 hover:bg-secondary-100/30",
       },
     ],
     defaultVariants: {

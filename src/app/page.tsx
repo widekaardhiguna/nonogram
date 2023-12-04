@@ -3,6 +3,8 @@ import Link from "next/link"
 import DifficultiesButton from "./_components/DifficultiesButton"
 import { Nonogram } from "@/components"
 import NonogramShowcase from "./_components/NonogramShowcase"
+import ModeTab from "./_components/ModeTab"
+import DifficultiesSelection from "./_components/DifficultiesSelection"
 
 export default function Home() {
   return (
@@ -20,24 +22,12 @@ export default function Home() {
       <div>
         <h1
           className={cx(
-            "text-center font-bold text-primary-400 tracking-widest text-4xl"
+            "text-center font-bold text-primary-400 tracking-[0.2em] text-4xl"
           )}
         >
           NONOGRAM
         </h1>
-        <div className={cx("h-[6rem]")}></div>
-        <h2
-          className={cx(
-            "font-semibold tracking-wide text-white mb-5 text-lg text-center"
-          )}
-        >
-          SELECT DIFFICULTIES
-        </h2>
-        <div className={cx("flex flex-col gap-3")}>
-          <DifficultiesButton href="easy">Easy</DifficultiesButton>
-          <DifficultiesButton href="medium">Medium</DifficultiesButton>
-          <DifficultiesButton href="hard">Hard</DifficultiesButton>
-        </div>
+        <DifficultiesSelection />
       </div>
     </main>
   )
