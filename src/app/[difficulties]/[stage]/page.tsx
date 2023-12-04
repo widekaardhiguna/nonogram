@@ -62,12 +62,17 @@ export default function StagePage({ params }: StagePageProps) {
   const setStageFinish = useStageStore((state) => state.setStageFinish)
   const setStageClearDate = useStageStore((state) => state.setStageClearDate)
 
+  const [currentClearTime, setCurrentClearTime] = useState<null | {
+    startAt: Date
+    finishedAt: Date
+  }>(null)
+
   // console.log(selectedStage)
   //
 
-  const { duration, stopTimer } = useTimer({
-    start: selectedStage?.startDate ? new Date(selectedStage.startDate) : null,
-  })
+  // const { duration, stopTimer } = useTimer({
+  //   start: selectedStage?.startAt ? new Date(selectedStage.startAt) : null,
+  // })
 
   const [val, setVal] = useState(
     generateDefaultValue(game?.solution.length ?? 0)
@@ -88,14 +93,22 @@ export default function StagePage({ params }: StagePageProps) {
   //   onClear()
   // }
 
-  const [isFinished, setIsFinished] = useState(false)
+  // const [isFinished, setIsFinished] = useState(false)
 
   const onFinished = () => {
-    setStageFinish(params.stage, params.difficulties)
+    const finishedAt = new Date()
+    if (selectedStage?.startAt) {
+      setCurrentClearTime({
+        startAt: new Date(selectedStage.startAt),
+        finishedAt: finishedAt,
+      })
+    }
+    setStageFinish(params.stage, params.difficulties, finishedAt)
     setStageFirstClear(params.stage, params.difficulties)
     setStageClearDate(params.stage, params.difficulties)
-    setIsFinished(true)
-    stopTimer()
+
+    // setIsFinished(true)
+    // stopTimer()
   }
 
   useEffect(() => {
@@ -108,13 +121,13 @@ export default function StagePage({ params }: StagePageProps) {
 
   useEffect(() => {
     if (selectedStage) {
-      if (!isFinished) {
+      if (!currentClearTime) {
         restartStage(params.stage, params.difficulties)
       }
     } else {
       newStage(params.stage, params.difficulties)
     }
-  }, [selectedStage, isFinished])
+  }, [selectedStage, currentClearTime])
 
   const nextStage = () => {
     const totalStages = stages[params.difficulties]
@@ -127,10 +140,14 @@ export default function StagePage({ params }: StagePageProps) {
   return (
     <main className="grid items-center justify-center h-full w-full">
       <div>
-        {isFinished ? (
-          <FinishedTime duration={duration} />
-        ) : (
-          <Timer duration={duration} />
+        {currentClearTime && (
+          <FinishedTime
+            startAt={currentClearTime.startAt}
+            finishedAt={currentClearTime.finishedAt}
+          />
+        )}
+        {!currentClearTime && selectedStage?.startAt && (
+          <Timer startAt={new Date(selectedStage.startAt)} />
         )}
         <div
           className={cx(
@@ -146,7 +163,7 @@ export default function StagePage({ params }: StagePageProps) {
             <HowToPlay />
             <FirstTimeClear duration={selectedStage?.firstClearTime} />
             <div className={cx("flex gap-2 justify-end", "xl:justify-normal")}>
-              {isFinished ? (
+              {currentClearTime ? (
                 <>
                   {/* <Button
                     size="small"

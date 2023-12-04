@@ -5,8 +5,8 @@ export type Stage = {
   id: string
   difficulty: Difficulty
   status: Status
-  startDate: string | null
-  finishedDate: string | null
+  startAt: string | null
+  finishedAt: string | null
   firstClearTime: Duration | null
 }
 
@@ -15,7 +15,7 @@ export type StageStore = {
   setStages: (stages: Stage[]) => void
   newStage: (id: string, difficulty: Difficulty) => void
   restartStage: (id: string, difficulty: Difficulty) => void
-  setStageFinish: (id: string, difficulty: Difficulty) => void
+  setStageFinish: (id: string, difficulty: Difficulty, finish: Date) => void
   setStageFirstClear: (id: string, difficulty: Difficulty) => void
   setStageClearDate: (id: string, difficulty: Difficulty) => void
 }

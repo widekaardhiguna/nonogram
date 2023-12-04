@@ -27,8 +27,8 @@ const useStageStore = create<StageStore>()(
                 id,
                 difficulty,
                 status: "onprogress",
-                startDate: new Date().toISOString(),
-                finishedDate: null,
+                startAt: new Date().toISOString(),
+                finishedAt: null,
                 firstClearTime: null,
               },
             ],
@@ -47,8 +47,8 @@ const useStageStore = create<StageStore>()(
                 return {
                   ...stage,
                   status: "onprogress",
-                  startDate: new Date().toISOString(),
-                  finishedDate: null,
+                  startAt: new Date().toISOString(),
+                  finishedAt: null,
                 }
               } else {
                 return stage
@@ -56,7 +56,7 @@ const useStageStore = create<StageStore>()(
             }),
           }
         }),
-      setStageFinish: (id, difficulty) =>
+      setStageFinish: (id, difficulty, finish) =>
         set((prev) => {
           return {
             ...prev,
@@ -65,7 +65,7 @@ const useStageStore = create<StageStore>()(
                 return {
                   ...stage,
                   status: "finished",
-                  finishedDate: new Date().toISOString(),
+                  finishedAt: finish.toISOString(),
                 }
               } else {
                 return stage
@@ -80,13 +80,13 @@ const useStageStore = create<StageStore>()(
             stages: prev.stages.map((stage) => {
               if (stage.id === id && stage.difficulty === difficulty) {
                 if (stage.firstClearTime) return stage
-                if (!stage.finishedDate) return stage
-                if (!stage.startDate) return stage
+                if (!stage.finishedAt) return stage
+                if (!stage.startAt) return stage
                 return {
                   ...stage,
                   firstClearTime: intervalToDuration({
-                    start: new Date(stage.startDate),
-                    end: new Date(stage.finishedDate),
+                    start: new Date(stage.startAt),
+                    end: new Date(stage.finishedAt),
                   }),
                 }
               } else {
@@ -103,8 +103,8 @@ const useStageStore = create<StageStore>()(
               if (stage.id === id && stage.difficulty === difficulty) {
                 return {
                   ...stage,
-                  startDate: null,
-                  finishedDate: null,
+                  startAt: null,
+                  finishedAt: null,
                 }
               } else {
                 return stage
