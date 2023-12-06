@@ -4,9 +4,12 @@ import { useState } from "react"
 import { cx } from "class-variance-authority"
 import ModeTab, { Mode } from "./ModeTab"
 import DifficultiesButton from "./DifficultiesButton"
+import useModeStore from "@/stores/mode-store/useModeStore"
 
 const DifficultiesSelection = () => {
-  const [mode, setMode] = useState<Mode>("campaign")
+  const mode = useModeStore((state) => state.mode)
+  const setMode = useModeStore((state) => state.setMode)
+  // const [mode, setMode] = useState<Mode>("campaign")
 
   const randomPath = mode === "random" ? "random/" : ""
 
