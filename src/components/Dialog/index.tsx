@@ -1,0 +1,5 @@
+export * from "@radix-ui/react-dialog"
+export { Content } from "./Content"
+export { Description } from "./Description"
+export { Overlay } from "./Overlay"
+export { Title } from "./Title"

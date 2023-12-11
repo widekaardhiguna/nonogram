@@ -4,6 +4,8 @@ import "./globals.css"
 import { cx } from "class-variance-authority"
 import { IconHelpCircle, IconChevronLeft } from "@tabler/icons-react"
 import Link from "next/link"
+import { TutorialDialog } from "./_components/TutorialDialog"
+import { IconButton } from "@/components"
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -45,7 +47,13 @@ export default function RootLayout({
               </div>
               <div className={cx("grow")}> </div>
               <div>
-                <IconHelpCircle className="text-white" />
+                <TutorialDialog
+                  Trigger={
+                    <button>
+                      <IconHelpCircle className="text-white" />
+                    </button>
+                  }
+                />
               </div>
             </div>
             {children}
