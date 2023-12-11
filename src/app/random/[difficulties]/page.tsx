@@ -14,7 +14,7 @@ import isEqual from "@/helpers/isEqual"
 import { IconSquareX, IconRefresh } from "@tabler/icons-react"
 
 import { cx } from "class-variance-authority"
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useCallback, useEffect, useState } from "react"
 
 type Game = {
   solution: NodeVariant[][]
@@ -63,7 +63,7 @@ const RandomGamePage = ({ params }: RandomGamePageProps) => {
     if (game) setVal(generateDefaultValue(game.solution.length))
   }
 
-  const onRestart = () => {
+  const onRestart = useCallback(() => {
     const nonogramLength = difficultiesToLengthMap[params.difficulties]
     const solution = generateRandomSolution(nonogramLength, nonogramBalancer)
     const rule = generateRule(solution)
@@ -76,12 +76,12 @@ const RandomGamePage = ({ params }: RandomGamePageProps) => {
       startAt: new Date(),
       finishedAt: null,
     })
-  }
+  }, [setGame, setVal, setCurrentClearTime, params.difficulties])
 
   // First Render
   useEffect(() => {
     onRestart()
-  }, [])
+  }, [onRestart])
 
   // Check finish condition
   useEffect(() => {

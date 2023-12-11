@@ -1,7 +1,7 @@
 "use client"
 
 import { Nonogram, NodeVariant, Button } from "@/components"
-import { Fragment, useEffect, useMemo, useState } from "react"
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react"
 import generateDefaultValue from "./_helpers/generateDefaultValue"
 import stages from "@/assets/stages/stages.json"
 import { DifficultiesPageProps } from "../page"
@@ -48,9 +48,11 @@ export default function StagePage({ params }: StagePageProps) {
   // const randomSol = generateRandomSolution(5, 7)
   // console.log(game.solution)
 
-  const game = stages[params.difficulties].find(
-    (games) => games.id === params.stage
-  )
+  const game = useMemo(() => {
+    return stages[params.difficulties].find(
+      (games) => games.id === params.stage
+    )
+  }, [params.difficulties, params.stage])
 
   // Store
   const selectedStage = usePersistStore(useStageStore, (state) =>
@@ -96,7 +98,7 @@ export default function StagePage({ params }: StagePageProps) {
 
   // const [isFinished, setIsFinished] = useState(false)
 
-  const onFinished = () => {
+  const onFinished = useCallback(() => {
     const finishedAt = new Date()
     if (selectedStage?.startAt) {
       setCurrentClearTime({
@@ -110,7 +112,14 @@ export default function StagePage({ params }: StagePageProps) {
 
     // setIsFinished(true)
     // stopTimer()
-  }
+  }, [
+    selectedStage?.startAt,
+    params.difficulties,
+    params.stage,
+    setStageFinish,
+    setStageFirstClear,
+    setStageClearDate,
+  ])
 
   useEffect(() => {
     const clearedVal = clearUntick(val)
@@ -118,7 +127,7 @@ export default function StagePage({ params }: StagePageProps) {
     if (isEqual(clearedVal, game?.solution ?? {})) {
       onFinished()
     }
-  }, [val])
+  }, [val, game?.solution, onFinished])
 
   useEffect(() => {
     if (selectedStage) {
@@ -128,7 +137,14 @@ export default function StagePage({ params }: StagePageProps) {
     } else {
       newStage(params.stage, params.difficulties)
     }
-  }, [selectedStage, currentClearTime])
+  }, [
+    selectedStage,
+    currentClearTime,
+    newStage,
+    restartStage,
+    params.difficulties,
+    params.stage,
+  ])
 
   const nextStage = () => {
     const totalStages = stages[params.difficulties]

@@ -75,8 +75,8 @@ const steps = [
     description: (
       <p>
         The number up there in a column tells you how many squares to fill in.
-        Like, if it's a 4, it means you have to put 4 filled squares in that
-        column.
+        Like, if it&apos;s a 4, it means you have to put 4 filled squares in
+        that column.
       </p>
     ),
   },
@@ -84,9 +84,9 @@ const steps = [
     example: <NonogramExample.Third />,
     description: (
       <p>
-        The rule goes for rows too. But this time, you'll notice two numbers (1,
-        2). This means you should place 1 square, then 2 squares in that row,
-        while making sure there's AT LEAST 1 space between them.
+        The rule goes for rows too. But this time, you&apos;ll notice two
+        numbers (1, 2). This means you should place 1 square, then 2 squares in
+        that row, while making sure there&apos;s AT LEAST 1 space between them.
       </p>
     ),
   },

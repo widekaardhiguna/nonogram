@@ -25,7 +25,7 @@ const useTimer = ({ start, end = new Date() }: UseTimer) => {
       })
     )
     isUpdated.current = true
-  }, [start])
+  }, [start, end])
 
   useEffect(() => {
     if (isStop) return

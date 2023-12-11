@@ -6,7 +6,7 @@ const RandomPage = () => {
   const { push } = useRouter()
   useEffect(() => {
     push(".")
-  }, [])
+  }, [push])
   return <></>
 }
 

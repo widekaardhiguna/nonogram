@@ -13,3 +13,5 @@ export const Overlay = forwardRef<HTMLDivElement, DialogOverlayProps>(
     )
   }
 )
+
+Overlay.displayName = "dialog-overlay"

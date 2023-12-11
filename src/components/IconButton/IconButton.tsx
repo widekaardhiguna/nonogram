@@ -20,6 +20,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   }
 )
 
+IconButton.displayName = "icon-button"
+
 const rootClass = cva(
   "flex justify-center items-center h-[2.5em] w-[2.5em] rounded-full [&_svg]:h-[1.5em] [&_svg]:w-[1.5em]",
   {

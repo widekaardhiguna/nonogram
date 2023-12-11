@@ -13,3 +13,5 @@ export const Content = forwardRef<HTMLDivElement, DialogContentProps>(
     )
   }
 )
+
+Content.displayName = "dialog-content"
