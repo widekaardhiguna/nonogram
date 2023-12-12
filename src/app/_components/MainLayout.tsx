@@ -10,7 +10,7 @@ export const MainLayout = ({ Main, TopLeft, TopRight }: MainLayoutProps) => {
   return (
     <div
       className={cx(
-        "h-screen bg-layered-steps bg-cover bg-bottom",
+        "h-screen bg-neutral-800 bg-cover bg-bottom relative before:content-['_'] before:absolute before:right-0 before:bg-neutral-700 before:h-[30vh] before:w-[100vw] before:bottom-0 ",
         "xl:grid xl:place-content-center"
       )}
     >
