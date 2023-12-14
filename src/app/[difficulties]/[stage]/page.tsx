@@ -1,6 +1,6 @@
 "use client"
 
-import { Nonogram, NodeVariant, Button } from "@/components"
+import { NodeVariant, Button, Nonogram, NonogramView } from "@/components"
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react"
 import stages from "@/assets/stages/stages.json"
 import { DifficultiesPageProps } from "../page"
@@ -16,7 +16,6 @@ import HowToPlay from "./_components/HowToPlay"
 import Link from "next/link"
 import FinishedTime from "./_components/FinishedTime"
 import StageGrid from "./_components/StageGrid"
-import { NonogramEngine } from "@/helpers/Nonogram"
 
 export type StagePageProps = {
   params: DifficultiesPageProps["params"] & {
@@ -48,11 +47,11 @@ export default function StagePage({ params }: StagePageProps) {
   }>(null)
 
   const [val, setVal] = useState(
-    NonogramEngine.getInitialValue(game?.solution.length ?? 0)
+    Nonogram.getInitialValue(game?.solution.length ?? 0)
   )
 
   const nonogram = useMemo(() => {
-    return new NonogramEngine({
+    return new Nonogram({
       type: "predefined",
       solution: (game?.solution as NodeVariant[][]) ?? [[]],
     })
@@ -63,7 +62,7 @@ export default function StagePage({ params }: StagePageProps) {
   }
 
   const onClear = () => {
-    setVal(NonogramEngine.getInitialValue(game?.solution.length ?? 0))
+    setVal(Nonogram.getInitialValue(game?.solution.length ?? 0))
   }
 
   const onFinished = useCallback(() => {
@@ -88,9 +87,9 @@ export default function StagePage({ params }: StagePageProps) {
 
   useEffect(() => {
     if (!game?.solution) return
-    const clearedVal = NonogramEngine.clearMark(val)
+    const clearedVal = Nonogram.clearMark(val)
 
-    if (NonogramEngine.isEqual(clearedVal, game.solution as NodeVariant[][])) {
+    if (Nonogram.isEqual(clearedVal, game.solution as NodeVariant[][])) {
       onFinished()
     }
   }, [val, game?.solution, onFinished])
@@ -136,7 +135,7 @@ export default function StagePage({ params }: StagePageProps) {
         </Fragment>
       }
       mid={
-        <Nonogram
+        <NonogramView
           rules={nonogram.rule}
           value={val}
           onChange={onChangeNonogram}

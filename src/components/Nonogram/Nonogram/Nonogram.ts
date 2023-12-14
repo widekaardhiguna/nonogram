@@ -1,6 +1,6 @@
 import { NodeVariant } from "@/components"
-import deepCopy from "./deepCopy"
-import isEqual from "./isEqual"
+import deepCopy from "@/helpers/deepCopy"
+import isEqual from "@/helpers/isEqual"
 
 type Balancer = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 type Rule = {
@@ -8,7 +8,7 @@ type Rule = {
   y: number[][]
 }
 
-type NonogramEngineConstructor =
+type NonogramConstructor =
   | {
       type: "random"
       length: number
@@ -21,12 +21,12 @@ type NonogramEngineConstructor =
 
 const regex = /o+/g
 
-export class NonogramEngine {
+export class Nonogram {
   length: number
   solution: NodeVariant[][]
   rule: Rule
 
-  constructor(arg: NonogramEngineConstructor) {
+  constructor(arg: NonogramConstructor) {
     if (arg.type === "random") {
       this.length = arg.length
       this.solution = this.generateRandomSolution(arg.balancer ?? 7)
@@ -34,7 +34,7 @@ export class NonogramEngine {
       this.length = arg.solution.length
       this.solution = arg.solution
     }
-    this.rule = NonogramEngine.generateRule(this.solution)
+    this.rule = Nonogram.generateRule(this.solution)
   }
 
   public static getInitialValue = (length: number) => {
@@ -80,10 +80,10 @@ export class NonogramEngine {
     let x: number[][] = []
 
     solution.forEach((_, index) => {
-      const ruleY = NonogramEngine.getRuleRow(solution, index)
+      const ruleY = Nonogram.getRuleRow(solution, index)
       y.push(ruleY)
 
-      const ruleX = NonogramEngine.getRuleCol(solution, index)
+      const ruleX = Nonogram.getRuleCol(solution, index)
       x.push(ruleX)
     })
 
@@ -134,8 +134,8 @@ export class NonogramEngine {
     solution1: NodeVariant[][],
     solution2: NodeVariant[][]
   ) => {
-    const rule1 = NonogramEngine.generateRule(solution1)
-    const rule2 = NonogramEngine.generateRule(solution2)
+    const rule1 = Nonogram.generateRule(solution1)
+    const rule2 = Nonogram.generateRule(solution2)
     return isEqual(rule1, rule2)
   }
 }

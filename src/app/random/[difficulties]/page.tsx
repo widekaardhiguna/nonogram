@@ -9,8 +9,7 @@ import Timer from "@/app/[difficulties]/[stage]/_components/Timer"
 // import generateRandomSolution from "@/app/[difficulties]/[stage]/_helpers/generateRandomSolution"
 // import generateRule from "@/app/[difficulties]/[stage]/_helpers/generateRule"
 import { DifficultiesPageProps } from "@/app/[difficulties]/page"
-import { Button, NodeVariant, Nonogram } from "@/components"
-import { NonogramEngine } from "@/helpers/Nonogram"
+import { Button, NodeVariant, Nonogram, NonogramView } from "@/components"
 import isEqual from "@/helpers/isEqual"
 import { IconSquareX, IconRefresh } from "@tabler/icons-react"
 
@@ -62,14 +61,14 @@ const RandomGamePage = ({ params }: RandomGamePageProps) => {
 
   const onClear = () => {
     if (game) {
-      setVal(NonogramEngine.getInitialValue(game.solution.length))
+      setVal(Nonogram.getInitialValue(game.solution.length))
     }
   }
 
   const onRestart = useCallback(() => {
     const nonogramLength = difficultiesToLengthMap[params.difficulties]
 
-    const nonogram = new NonogramEngine({
+    const nonogram = new Nonogram({
       type: "random",
       length: nonogramLength,
       balancer: nonogramBalancer,
@@ -79,7 +78,7 @@ const RandomGamePage = ({ params }: RandomGamePageProps) => {
       solution: nonogram.solution,
       rule: nonogram.rule,
     })
-    setVal(NonogramEngine.getInitialValue(nonogramLength))
+    setVal(Nonogram.getInitialValue(nonogramLength))
     setCurrentClearTime({
       startAt: new Date(),
       finishedAt: null,
@@ -94,8 +93,8 @@ const RandomGamePage = ({ params }: RandomGamePageProps) => {
   // Check finish condition
   useEffect(() => {
     if (!game) return
-    const clearedVal = NonogramEngine.clearMark(val)
-    if (NonogramEngine.isEqual(clearedVal, game.solution)) {
+    const clearedVal = Nonogram.clearMark(val)
+    if (Nonogram.isEqual(clearedVal, game.solution)) {
       onFinished()
     }
   }, [val, game])
@@ -118,7 +117,7 @@ const RandomGamePage = ({ params }: RandomGamePageProps) => {
       mid={
         <Fragment>
           {game && (
-            <Nonogram
+            <NonogramView
               rules={game.rule}
               value={val}
               onChange={onChangeNonogram}

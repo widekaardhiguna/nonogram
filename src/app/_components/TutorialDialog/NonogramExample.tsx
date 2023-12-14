@@ -1,15 +1,15 @@
 "use client"
 
-import { Nonogram } from "@/components"
+import { NonogramView } from "@/components"
 
 const rules = {
   x: [[2], [], [1, 1], [4]],
   y: [[2], [1], [1, 2], [1, 1]],
 }
 
-const Nonogram1 = () => {
+const NonogramView1 = () => {
   return (
-    <Nonogram
+    <NonogramView
       rules={rules}
       value={[
         ["-", "-", "-", "-"],
@@ -21,9 +21,9 @@ const Nonogram1 = () => {
   )
 }
 
-const Nonogram2 = () => {
+const NonogramView2 = () => {
   return (
-    <Nonogram
+    <NonogramView
       rules={rules}
       value={[
         ["-", "-", "-", "o"],
@@ -35,9 +35,9 @@ const Nonogram2 = () => {
   )
 }
 
-const Nonogram3 = () => {
+const NonogramView3 = () => {
   return (
-    <Nonogram
+    <NonogramView
       rules={rules}
       value={[
         ["-", "-", "-", "o"],
@@ -49,9 +49,9 @@ const Nonogram3 = () => {
   )
 }
 
-const Nonogram4 = () => {
+const NonogramView4 = () => {
   return (
-    <Nonogram
+    <NonogramView
       rules={rules}
       value={[
         ["-", "-", "o", "o"],
@@ -64,8 +64,8 @@ const Nonogram4 = () => {
 }
 
 export const NonogramExample = {
-  First: Nonogram1,
-  Second: Nonogram2,
-  Third: Nonogram3,
-  Fourth: Nonogram4,
+  First: NonogramView1,
+  Second: NonogramView2,
+  Third: NonogramView3,
+  Fourth: NonogramView4,
 }

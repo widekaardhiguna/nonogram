@@ -1,10 +1,10 @@
 "use client"
 
-import { Nonogram } from "@/components"
+import { NonogramView } from "@/components"
 
-const NonogramShowcase = () => {
+const NonogramViewShowcase = () => {
   return (
-    <Nonogram
+    <NonogramView
       rules={{
         x: [[2, 1], [1], [1, 1], [2, 1]],
         y: [[2, 1], [1, 2], [], [1, 2]],
@@ -19,4 +19,4 @@ const NonogramShowcase = () => {
   )
 }
 
-export default NonogramShowcase
+export default NonogramViewShowcase

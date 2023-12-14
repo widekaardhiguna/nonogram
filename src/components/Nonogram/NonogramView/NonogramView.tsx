@@ -3,7 +3,7 @@ import { CellHint } from "./CellHint"
 import { CellNode } from "./CellNode"
 import { Node, NodeVariant } from "./Node"
 
-type NonogramProps = {
+type NonogramViewProps = {
   rules: {
     x: number[][]
     y: number[][]
@@ -12,7 +12,7 @@ type NonogramProps = {
   onChange?: (value: NodeVariant[][]) => void
 }
 
-export const Nonogram = ({ rules, value, onChange }: NonogramProps) => {
+export const NonogramView = ({ rules, value, onChange }: NonogramViewProps) => {
   const onLeftClickNode = (xIndex: number, yIndex: number) => {
     let newValue = deepCopy(value)
     const nodeVariant = newValue[yIndex][xIndex]
