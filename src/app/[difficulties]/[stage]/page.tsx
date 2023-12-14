@@ -6,7 +6,6 @@ import stages from "@/assets/stages/stages.json"
 import { DifficultiesPageProps } from "../page"
 import { IconChevronRight, IconSquareX } from "@tabler/icons-react"
 import { cx } from "class-variance-authority"
-import isEqual from "@/helpers/isEqual"
 import useStageStore from "@/stores/stage-store/useStageStore"
 
 import Timer from "./_components/Timer"
@@ -88,9 +87,10 @@ export default function StagePage({ params }: StagePageProps) {
   ])
 
   useEffect(() => {
+    if (!game?.solution) return
     const clearedVal = NonogramEngine.clearMark(val)
 
-    if (isEqual(clearedVal, game?.solution ?? {})) {
+    if (NonogramEngine.isEqual(clearedVal, game.solution as NodeVariant[][])) {
       onFinished()
     }
   }, [val, game?.solution, onFinished])
