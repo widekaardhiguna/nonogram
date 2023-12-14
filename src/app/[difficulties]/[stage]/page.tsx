@@ -2,28 +2,22 @@
 
 import { Nonogram, NodeVariant, Button } from "@/components"
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react"
-import generateDefaultValue from "./_helpers/generateDefaultValue"
 import stages from "@/assets/stages/stages.json"
 import { DifficultiesPageProps } from "../page"
 import { IconChevronRight, IconSquareX } from "@tabler/icons-react"
-import IconLeftClick from "@/assets/icons/IconLeftClick"
-import IconRightClick from "@/assets/icons/IconRightClick"
 import { cx } from "class-variance-authority"
-import generateRule from "./_helpers/generateRule"
-import clearUntick from "./_helpers/clearUntick"
 import isEqual from "@/helpers/isEqual"
-import generateRandomSolution from "./_helpers/generateRandomSolution"
 import useStageStore from "@/stores/stage-store/useStageStore"
 
 import Timer from "./_components/Timer"
 import usePersistStore from "@/hooks/usePersistStore"
 import { selectStage } from "@/stores/stage-store/stage-store-selector/selectStage"
 import FirstTimeClear from "./_components/FirstTimeClear"
-import useTimer from "@/hooks/useTimer"
 import HowToPlay from "./_components/HowToPlay"
 import Link from "next/link"
 import FinishedTime from "./_components/FinishedTime"
 import StageGrid from "./_components/StageGrid"
+import { NonogramEngine } from "@/helpers/Nonogram"
 
 export type StagePageProps = {
   params: DifficultiesPageProps["params"] & {
@@ -31,23 +25,7 @@ export type StagePageProps = {
   }
 }
 
-const randomSol = generateRandomSolution(4, 6)
-
 export default function StagePage({ params }: StagePageProps) {
-  // console.log(generateRandomSolution(5, 7))
-
-  // const { randomSol, rule } = useMemo(() => {
-  //   const sol = generateRandomSolution(5, 6)
-  //   const rl = generateRule(sol)
-
-  //   return {
-  //     randomSol: sol,
-  //     rule: rl,
-  //   }
-  // }, [])
-  // const randomSol = generateRandomSolution(5, 7)
-  // console.log(game.solution)
-
   const game = useMemo(() => {
     return stages[params.difficulties].find(
       (games) => games.id === params.stage
@@ -70,33 +48,24 @@ export default function StagePage({ params }: StagePageProps) {
     finishedAt: Date
   }>(null)
 
-  // console.log(selectedStage)
-  //
-
-  // const { duration, stopTimer } = useTimer({
-  //   start: selectedStage?.startAt ? new Date(selectedStage.startAt) : null,
-  // })
-
   const [val, setVal] = useState(
-    generateDefaultValue(game?.solution.length ?? 0)
+    NonogramEngine.getInitialValue(game?.solution.length ?? 0)
   )
 
-  const rule = generateRule(game?.solution ?? [[]])
+  const nonogram = useMemo(() => {
+    return new NonogramEngine({
+      type: "predefined",
+      solution: (game?.solution as NodeVariant[][]) ?? [[]],
+    })
+  }, [game?.solution])
 
   const onChangeNonogram = (value: NodeVariant[][]) => {
     setVal(value)
   }
 
   const onClear = () => {
-    setVal(generateDefaultValue(game?.solution.length ?? 0))
+    setVal(NonogramEngine.getInitialValue(game?.solution.length ?? 0))
   }
-
-  // const onRestart = () => {
-  //   setIsFinished(false)
-  //   onClear()
-  // }
-
-  // const [isFinished, setIsFinished] = useState(false)
 
   const onFinished = useCallback(() => {
     const finishedAt = new Date()
@@ -109,9 +78,6 @@ export default function StagePage({ params }: StagePageProps) {
     setStageFinish(params.stage, params.difficulties, finishedAt)
     setStageFirstClear(params.stage, params.difficulties)
     setStageClearDate(params.stage, params.difficulties)
-
-    // setIsFinished(true)
-    // stopTimer()
   }, [
     selectedStage?.startAt,
     params.difficulties,
@@ -122,7 +88,7 @@ export default function StagePage({ params }: StagePageProps) {
   ])
 
   useEffect(() => {
-    const clearedVal = clearUntick(val)
+    const clearedVal = NonogramEngine.clearMark(val)
 
     if (isEqual(clearedVal, game?.solution ?? {})) {
       onFinished()
@@ -169,33 +135,28 @@ export default function StagePage({ params }: StagePageProps) {
           )}
         </Fragment>
       }
-      mid={<Nonogram rules={rule} value={val} onChange={onChangeNonogram} />}
+      mid={
+        <Nonogram
+          rules={nonogram.rule}
+          value={val}
+          onChange={onChangeNonogram}
+        />
+      }
       right={
         <Fragment>
           <HowToPlay />
           <FirstTimeClear duration={selectedStage?.firstClearTime} />
           <div className={cx("flex gap-2 justify-end", "xl:justify-normal")}>
             {currentClearTime ? (
-              <>
-                {/* <Button
-                    size="small"
-                    color="secondary"
-                    variant="outlined"
-                    rightIcon={<IconSquareX />}
-                    onClick={onRestart}
-                  >
-                    Restart
-                  </Button> */}
-                <Link href={nextStage()}>
-                  <Button
-                    size="small"
-                    color="primary"
-                    rightIcon={<IconChevronRight />}
-                  >
-                    Next Stage
-                  </Button>
-                </Link>
-              </>
+              <Link href={nextStage()}>
+                <Button
+                  size="small"
+                  color="primary"
+                  rightIcon={<IconChevronRight />}
+                >
+                  Next Stage
+                </Button>
+              </Link>
             ) : (
               <Button
                 size="small"

@@ -4,12 +4,13 @@ import FinishedTime from "@/app/[difficulties]/[stage]/_components/FinishedTime"
 import HowToPlay from "@/app/[difficulties]/[stage]/_components/HowToPlay"
 import StageGrid from "@/app/[difficulties]/[stage]/_components/StageGrid"
 import Timer from "@/app/[difficulties]/[stage]/_components/Timer"
-import clearUntick from "@/app/[difficulties]/[stage]/_helpers/clearUntick"
-import generateDefaultValue from "@/app/[difficulties]/[stage]/_helpers/generateDefaultValue"
-import generateRandomSolution from "@/app/[difficulties]/[stage]/_helpers/generateRandomSolution"
-import generateRule from "@/app/[difficulties]/[stage]/_helpers/generateRule"
+// import clearUntick from "@/app/[difficulties]/[stage]/_helpers/clearUntick"
+// import generateDefaultValue from "@/app/[difficulties]/[stage]/_helpers/generateDefaultValue"
+// import generateRandomSolution from "@/app/[difficulties]/[stage]/_helpers/generateRandomSolution"
+// import generateRule from "@/app/[difficulties]/[stage]/_helpers/generateRule"
 import { DifficultiesPageProps } from "@/app/[difficulties]/page"
 import { Button, NodeVariant, Nonogram } from "@/components"
+import { NonogramEngine } from "@/helpers/Nonogram"
 import isEqual from "@/helpers/isEqual"
 import { IconSquareX, IconRefresh } from "@tabler/icons-react"
 
@@ -60,18 +61,25 @@ const RandomGamePage = ({ params }: RandomGamePageProps) => {
   }
 
   const onClear = () => {
-    if (game) setVal(generateDefaultValue(game.solution.length))
+    if (game) {
+      setVal(NonogramEngine.getInitialValue(game.solution.length))
+    }
   }
 
   const onRestart = useCallback(() => {
     const nonogramLength = difficultiesToLengthMap[params.difficulties]
-    const solution = generateRandomSolution(nonogramLength, nonogramBalancer)
-    const rule = generateRule(solution)
-    setGame({
-      solution,
-      rule,
+
+    const nonogram = new NonogramEngine({
+      type: "random",
+      length: nonogramLength,
+      balancer: nonogramBalancer,
     })
-    setVal(generateDefaultValue(solution.length))
+
+    setGame({
+      solution: nonogram.solution,
+      rule: nonogram.rule,
+    })
+    setVal(NonogramEngine.getInitialValue(nonogramLength))
     setCurrentClearTime({
       startAt: new Date(),
       finishedAt: null,
@@ -86,8 +94,8 @@ const RandomGamePage = ({ params }: RandomGamePageProps) => {
   // Check finish condition
   useEffect(() => {
     if (!game) return
-    const clearedVal = clearUntick(val)
-    if (isEqual(clearedVal, game.solution)) {
+    const clearedVal = NonogramEngine.clearMark(val)
+    if (NonogramEngine.isEqual(clearedVal, game.solution)) {
       onFinished()
     }
   }, [val, game])
