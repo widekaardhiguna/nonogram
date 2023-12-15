@@ -1,6 +1,6 @@
 "use client"
 
-import getClearTime from "@/helpers/getClearTime"
+import getClearTime from "@/helpers/time/getClearTime"
 import useTimer from "@/hooks/useTimer"
 import { cx } from "class-variance-authority"
 import { Duration } from "date-fns"

@@ -1,4 +1,4 @@
-import getClearTime from "@/helpers/getClearTime"
+import getClearTime from "@/helpers/time/getClearTime"
 import { Duration } from "date-fns"
 
 type FirstTimeClearProps = {

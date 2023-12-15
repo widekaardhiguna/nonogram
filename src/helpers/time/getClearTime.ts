@@ -4,6 +4,7 @@ const getClearTime = (duration: Duration | undefined | null) => {
   if (duration?.hours) {
     duration.hours =
       (duration.years ?? 0) * 8766 +
+      (duration.months ?? 0) * 730 +
       (duration.weeks ?? 0) * 168 +
       (duration.days ?? 0) * 24 +
       duration.hours

@@ -1,4 +1,4 @@
-import deepCopy from "@/helpers/deepCopy"
+import deepCopy from "@/helpers/object/deepCopy"
 import { CellHint } from "./CellHint"
 import { CellNode } from "./CellNode"
 import { Node, NodeVariant } from "./Node"

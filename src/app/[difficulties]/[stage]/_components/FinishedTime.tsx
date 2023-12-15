@@ -1,4 +1,4 @@
-import getClearTime from "@/helpers/getClearTime"
+import getClearTime from "@/helpers/time/getClearTime"
 import { cx } from "class-variance-authority"
 import { Duration, intervalToDuration } from "date-fns"
 
