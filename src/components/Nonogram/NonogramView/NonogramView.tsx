@@ -46,12 +46,17 @@ export const NonogramView = ({ rules, value, onChange }: NonogramViewProps) => {
         <tr>
           <th />
           {rules.x.map((hints, index) => (
-            <CellHint direction="column" key={index} hints={hints} />
+            <CellHint
+              direction="column"
+              key={index}
+              hints={hints}
+              dataTestId={index}
+            />
           ))}
         </tr>
         {rules.y.map((hints, yIndex) => (
           <tr key={yIndex}>
-            <CellHint direction="row" hints={hints} />
+            <CellHint direction="row" hints={hints} dataTestId={yIndex} />
             {rules.x.map((_, xIndex) => (
               <CellNode key={xIndex}>
                 <Node
@@ -63,6 +68,7 @@ export const NonogramView = ({ rules, value, onChange }: NonogramViewProps) => {
                     e.preventDefault()
                     onRightClickNode(xIndex, yIndex)
                   }}
+                  dataTestId={[xIndex, yIndex]}
                 />
               </CellNode>
             ))}

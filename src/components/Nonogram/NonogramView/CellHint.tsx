@@ -2,11 +2,15 @@ import { VariantProps, cva } from "class-variance-authority"
 
 type CellHintProps = HintWrapperVariant & {
   hints?: number[]
+  dataTestId: number
 }
 
-export const CellHint = ({ hints, direction }: CellHintProps) => {
+export const CellHint = ({ hints, direction, dataTestId }: CellHintProps) => {
   return (
-    <th className="border-2 border-neutral-700 p-1 text-white font-semibold">
+    <th
+      className="border-2 border-neutral-700 p-1 text-white font-semibold"
+      data-testid={`hint-${direction}-${dataTestId}`}
+    >
       <div className={hintWrapperClass({ direction: direction })}>
         {hints?.map((hint, index) => (
           <div key={index}>{hint}</div>
