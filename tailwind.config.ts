@@ -50,7 +50,7 @@ const config: Config = {
       },
       animation: {
         contentShow: "contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
-        zoomIn: "zoomIn 300ms forwards",
+        zoomIn: "zoomIn 200ms forwards",
         tiltIn: "tiltIn 300ms forwards",
         tiltOut: "tiltOut 300ms forwards",
       },

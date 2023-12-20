@@ -5,6 +5,7 @@ import HowToPlay from "@/app/[difficulties]/[stage]/_components/HowToPlay"
 import StageGrid from "@/app/[difficulties]/[stage]/_components/StageGrid"
 import Timer from "@/app/[difficulties]/[stage]/_components/Timer"
 import { DifficultiesPageProps } from "@/app/[difficulties]/page"
+import { PageSpinner } from "@/app/_components/PageSpinner/PageSpinner"
 import { Button, NodeVariant, Nonogram, NonogramView } from "@/components"
 import { IconSquareX, IconRefresh } from "@tabler/icons-react"
 
@@ -94,6 +95,7 @@ const RandomGamePage = ({ params }: RandomGamePageProps) => {
     }
   }, [val, game])
 
+  if (!game) return <PageSpinner />
   return (
     <StageGrid
       top={
@@ -111,13 +113,11 @@ const RandomGamePage = ({ params }: RandomGamePageProps) => {
       }
       mid={
         <Fragment>
-          {game && (
-            <NonogramView
-              rules={game.rule}
-              value={val}
-              onChange={onChangeNonogram}
-            />
-          )}
+          <NonogramView
+            rules={game.rule}
+            value={val}
+            onChange={onChangeNonogram}
+          />
         </Fragment>
       }
       right={

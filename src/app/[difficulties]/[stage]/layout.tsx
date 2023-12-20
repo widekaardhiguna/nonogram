@@ -6,6 +6,7 @@ import game from "@/assets/stages/stages.json"
 import usePersistStore from "@/hooks/usePersistStore"
 import useStageStore from "@/stores/stage-store/useStageStore"
 import { finishedStages } from "@/stores/stage-store/stage-store-selector/finishedStages"
+import { PageSpinner } from "@/app/_components/PageSpinner/PageSpinner"
 
 type StageLayoutProps = StagePageProps & {
   children: React.ReactNode
@@ -23,7 +24,7 @@ export default function StageLayout({ children, params }: StageLayoutProps) {
     (state) => finishedStages(state.stages, params.difficulties).length
   )
 
-  if (typeof finishedStagesTotal !== "number") return <></>
+  if (typeof finishedStagesTotal !== "number") return <PageSpinner />
 
   const isOverStepping = parseInt(params.stage) > finishedStagesTotal + 1
 
