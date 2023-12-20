@@ -22,7 +22,7 @@ const StageButton = ({ children, variant, ...props }: StageButtonProps) => {
 export default StageButton
 
 const rootClass = cx(
-  "flex flex-col items-center justify-center gap-1 text-md text-white capitalize hover:text-primary-400 font-normal py-[1em] px-[1em]",
+  "flex flex-col items-center justify-center gap-1 text-md text-white capitalize hover:text-primary-400 font-normal py-[1em] px-[1em] hover:animate-zoomIn",
   "md:text-lg"
 )
 

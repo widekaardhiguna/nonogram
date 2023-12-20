@@ -16,7 +16,7 @@ export const MainLayout = ({ Main, TopLeft, TopRight }: MainLayoutProps) => {
     >
       <div
         className={cx(
-          "relative h-full overflow-auto rounded-lg bg-neutral-900",
+          "relative h-full overflow-hidden rounded-lg bg-neutral-900",
           "xl:h-[90vh] xl:w-[min(1400px,100vw)]"
         )}
       >
