@@ -9,8 +9,8 @@ export const TutorialGrid = ({ left, right }: TutorialGridProps) => {
   return (
     <div
       className={cx(
-        "grid grid-cols-1 gap-y-4 gap-x-6 px-10 mt-6",
-        "lg:grid-cols-[auto_1fr]"
+        "grid grid-cols-1 gap-y-4 gap-x-6 px-4 mt-6",
+        "lg:grid-cols-[auto_1fr] lg:px-10"
       )}
     >
       <div className="flex place-content-center">{left}</div>
