@@ -16,6 +16,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Nonogram",
   description: "Learn and play Nonogram.",
+  icons: {
+    icon: "/icon.svg",
+  },
 }
 
 export default function RootLayout({
