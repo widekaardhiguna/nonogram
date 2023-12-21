@@ -1,7 +1,6 @@
 "use client"
 
-import StageButton from "./_components/StageButton"
-import { cx } from "class-variance-authority"
+import { StageButton } from "./_components/StageButton"
 import game from "@/assets/stages/stages.json"
 import { Difficulty } from "@/stores/stage-store/stage-store.types"
 import usePersistStore from "@/hooks/usePersistStore"
