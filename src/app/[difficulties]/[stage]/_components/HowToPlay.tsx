@@ -9,7 +9,7 @@ const HowToPlay = ({}: HowToPlayProps) => {
   return (
     <>
       {/* Desktop */}
-      <div className={cx("hidden mb-4", "xl:block")}>
+      <div className={"hidden mb-4 xl:block"}>
         <div className={hintClass}>
           <IconLeftClick height="1.2rem" width="1.2rem" />
           <p>Left click: to fill the square</p>
@@ -23,7 +23,7 @@ const HowToPlay = ({}: HowToPlayProps) => {
         </div>
       </div>
       {/* Mobile */}
-      <div className={cx("block mb-4", "xl:hidden")}>
+      <div className={"block mb-4 xl:hidden"}>
         <div className={hintClass}>
           <IconHandClick height="1.2rem" width="1.2rem" />
           <p>Touch: to fill the square</p>

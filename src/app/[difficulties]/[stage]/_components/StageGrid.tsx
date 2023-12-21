@@ -12,10 +12,9 @@ const StageGrid = ({ top, mid, right }: StageGridProps) => {
       <div>
         {top}
         <div
-          className={cx(
-            "grid grid-cols-[1fr] gap-y-5 gap-x-12",
-            "xl:grid-cols-[1fr_auto_1fr]"
-          )}
+          className={
+            "grid grid-cols-[1fr] gap-y-5 gap-x-12 xl:grid-cols-[1fr_auto_1fr]"
+          }
         >
           <div></div>
           <div className="grid justify-center">{mid}</div>

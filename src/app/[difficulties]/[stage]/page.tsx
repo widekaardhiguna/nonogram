@@ -145,7 +145,7 @@ export default function StagePage({ params }: StagePageProps) {
         <Fragment>
           <HowToPlay />
           <FirstTimeClear duration={selectedStage?.firstClearTime} />
-          <div className={cx("flex gap-2 justify-end", "xl:justify-normal")}>
+          <div className={"flex gap-2 justify-end xl:justify-normal"}>
             {currentClearTime ? (
               <Link href={nextStage()}>
                 <Button

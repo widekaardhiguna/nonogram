@@ -11,9 +11,9 @@ const DifficultiesButton = ({
 }: DifficultiesButtonProps) => {
   return (
     <Link
-      className={cx(
+      className={
         "block text-white text-xl font-medium p-2 rounded-md text-center hover:text-primary-400 hover:animate-tiltIn"
-      )}
+      }
       {...props}
     >
       {children}

@@ -13,7 +13,7 @@ const FinishedTime = ({ startAt, finishedAt }: FinishedTimeProps) => {
     end: finishedAt,
   })
   return (
-    <div className={cx("text-primary-400 text-center", "xl:mb-6")}>
+    <div className={"text-primary-400 text-center xl:mb-6"}>
       Finished, your clear time is <span>{getClearTime(duration)}</span>
     </div>
   )

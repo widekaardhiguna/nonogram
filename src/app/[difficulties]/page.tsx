@@ -49,11 +49,9 @@ export default function DifficultiesPage({ params }: DifficultiesPageProps) {
           {finishedStagesTotal} of {stages.length} stages completed.
         </p>
         <nav
-          className={cx(
-            "grid grid-cols-3 mx-auto max-w-sm",
-            "md:max-w-xl md:grid-cols-4",
-            "lg:max-w-2xl lg:gap-y-4"
-          )}
+          className={
+            "grid grid-cols-3 mx-auto max-w-sm md:max-w-xl md:grid-cols-4 lg:max-w-2xl lg:gap-y-4"
+          }
         >
           {availableStages?.map((stage) => {
             return (

@@ -15,7 +15,7 @@ const Timer = ({ startAt }: TimerProps) => {
   })
 
   return (
-    <div className={cx("text-white text-center", "xl:mb-6")}>
+    <div className={"text-white text-center xl:mb-6"}>
       Time passed: <span>{getClearTime(duration)}</span>
     </div>
   )

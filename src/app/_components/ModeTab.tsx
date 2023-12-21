@@ -13,9 +13,9 @@ export type ModeTabProps = {
 const ModeTab = ({ value = "campaign", onChange }: ModeTabProps) => {
   return (
     <div
-      className={cx(
+      className={
         "flex gap-3 rounded-xl border border-primary-400 bg-secondary-900 p-2"
-      )}
+      }
     >
       <Button
         size="small"

@@ -10,7 +10,12 @@ export type StageButtonProps = LinkProps &
 
 const StageButton = ({ children, variant, ...props }: StageButtonProps) => {
   return (
-    <Link className={rootClass} {...props}>
+    <Link
+      className={
+        "flex flex-col items-center justify-center gap-1 text-md text-white capitalize hover:text-primary-400 font-normal py-[1em] px-[1em] hover:animate-zoomIn md:text-lg"
+      }
+      {...props}
+    >
       <span className={iconWrapperClass({ variant })}>
         <IconGrid3x3 height="1.8em" width="1.8em" />
       </span>
@@ -20,11 +25,6 @@ const StageButton = ({ children, variant, ...props }: StageButtonProps) => {
 }
 
 export default StageButton
-
-const rootClass = cx(
-  "flex flex-col items-center justify-center gap-1 text-md text-white capitalize hover:text-primary-400 font-normal py-[1em] px-[1em] hover:animate-zoomIn",
-  "md:text-lg"
-)
 
 const iconWrapperClass = cva(
   "block text-neutral-900 rounded-md py-[0.5em] px-[0.5em]",
