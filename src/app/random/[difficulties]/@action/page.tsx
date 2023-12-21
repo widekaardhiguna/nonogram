@@ -1,18 +1,11 @@
 "use client"
 
-import { DifficultiesPageProps } from "@/app/[difficulties]/page"
 import { Button } from "@/components"
 import { IconSquareX, IconRefresh } from "@tabler/icons-react"
 import useRandomNonogram from "../_use-case/useRandomNonogram"
 
-type RandomGamePageProps = {
-  params: DifficultiesPageProps["params"]
-}
-
-const ActionPage = ({ params }: RandomGamePageProps) => {
-  const { currentClearTime, onClear, onRestart } = useRandomNonogram({
-    difficulty: params.difficulties,
-  })
+const ActionPage = () => {
+  const { currentClearTime, onClear, onRestart } = useRandomNonogram()
 
   return (
     <>
