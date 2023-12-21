@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import useRandomStageStore from "../_stores/useRandomStageStore"
+import useRandomStageStore from "@/stores/random-stage-store/useRandomStageStore"
 import { Rule, NodeVariant, Nonogram } from "@/components/Nonogram"
 
 export type UseSyncStates = {

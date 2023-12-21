@@ -1,7 +1,7 @@
 import { NodeVariant, Nonogram } from "@/components"
 
 import { useCallback } from "react"
-import useRandomStageStore from "../_stores/useRandomStageStore"
+import useRandomStageStore from "@/stores/random-stage-store/useRandomStageStore"
 
 import { useRouter } from "next/navigation"
 
