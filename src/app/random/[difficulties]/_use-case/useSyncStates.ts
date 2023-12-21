@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import useRandomStageStore from "../_stores/useRandomStageStore"
 import { Rule, NodeVariant, Nonogram } from "@/components/Nonogram"
 
-export type UseRandomNonogramEffect = {
+export type UseSyncStates = {
   nonogram: {
     length: number
     solution: NodeVariant[][]
@@ -10,7 +10,7 @@ export type UseRandomNonogramEffect = {
   }
 }
 
-const useRandomNonogramEffect = ({ nonogram }: UseRandomNonogramEffect) => {
+const useSyncStates = ({ nonogram }: UseSyncStates) => {
   const setGame = useRandomStageStore((state) => state.setGame)
   const setVal = useRandomStageStore((state) => state.setVal)
   const setCurrentClearTime = useRandomStageStore(
@@ -30,4 +30,4 @@ const useRandomNonogramEffect = ({ nonogram }: UseRandomNonogramEffect) => {
   }, [nonogram, setGame, setVal, setCurrentClearTime])
 }
 
-export default useRandomNonogramEffect
+export default useSyncStates

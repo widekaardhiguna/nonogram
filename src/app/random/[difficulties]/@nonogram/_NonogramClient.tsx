@@ -3,28 +3,23 @@
 import { NonogramView } from "@/components"
 import { Difficulty } from "@/stores/stage-store/stage-store.types"
 import useRandomNonogram from "../_use-case/useRandomNonogram"
-import useRandomNonogramEffect, {
-  UseRandomNonogramEffect,
-} from "../_use-case/useRandomNonogramEffect"
+import useSyncStates, { UseSyncStates } from "../_use-case/useSyncStates"
+import LoadingNonogram from "../@nonogram/loading"
 
 type NonogramClientProps = {
-  difficulty: Difficulty
-  nonogram: UseRandomNonogramEffect["nonogram"]
+  nonogram: UseSyncStates["nonogram"]
 }
 
-const NonogramClient = ({ difficulty, nonogram }: NonogramClientProps) => {
-  useRandomNonogramEffect({
+const NonogramClient = ({ nonogram }: NonogramClientProps) => {
+  useSyncStates({
     nonogram,
   })
 
-  const { game, val, onChangeNonogram, onFinished } = useRandomNonogram({
-    difficulty,
-  })
+  const { game, val, onChangeNonogram, onFinished } = useRandomNonogram()
 
-  if (!game)
-    return (
-      <div className="relative h-[500px] w-[500px] before:absolute before:w-full before:h-full before:bg-neutral-800 before:animate-pulse before:rounded-lg"></div>
-    )
+  if (!game) {
+    return <LoadingNonogram />
+  }
 
   return (
     <NonogramView
