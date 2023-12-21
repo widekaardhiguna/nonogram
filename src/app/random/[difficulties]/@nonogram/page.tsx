@@ -1,6 +1,8 @@
 import { DifficultiesPageProps } from "@/app/[difficulties]/page"
 import { Nonogram } from "@/components/Nonogram"
-import NonogramClient from "./__NonogramClient"
+import NonogramClient from "./_NonogramClient"
+import useRandomNonogram from "../_use-case/useRandomNonogram"
+import useRandomStageStore from "../_stores/useRandomStageStore"
 
 type RandomGamePageProps = {
   params: DifficultiesPageProps["params"]

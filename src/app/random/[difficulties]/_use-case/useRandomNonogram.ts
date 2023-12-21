@@ -6,6 +6,7 @@ import useRandomStageStore from "../_stores/useRandomStageStore"
 import { Difficulty } from "@/stores/stage-store/stage-store.types"
 import { Game } from "../_stores/random-stage-store.types"
 import { Rule } from "@/components/Nonogram"
+import { useRouter } from "next/navigation"
 
 const difficultiesToLengthMap = {
   easy: 4,
@@ -20,6 +21,8 @@ export type UseRandomNonogram = {
 }
 
 const useRandomNonogram = ({ difficulty }: UseRandomNonogram) => {
+  const { refresh } = useRouter()
+
   const game = useRandomStageStore((state) => state.game)
   const setGame = useRandomStageStore((state) => state.setGame)
   const val = useRandomStageStore((state) => state.val)
@@ -31,16 +34,20 @@ const useRandomNonogram = ({ difficulty }: UseRandomNonogram) => {
     (state) => state.setCurrentClearTime
   )
 
-  const onChangeNonogram = (value: NodeVariant[][]) => {
-    setVal(value)
+  const onFinished = (value: NodeVariant[][]) => {
+    if (!game) return
+    const clearedVal = Nonogram.clearMark(value)
+    if (Nonogram.isEqual(clearedVal, game.solution)) {
+      const finishedAt = new Date()
+      setCurrentClearTime({
+        ...currentClearTime,
+        finishedAt: finishedAt,
+      })
+    }
   }
 
-  const onFinished = () => {
-    const finishedAt = new Date()
-    setCurrentClearTime({
-      ...currentClearTime,
-      finishedAt: finishedAt,
-    })
+  const onChangeNonogram = (value: NodeVariant[][]) => {
+    setVal(value)
   }
 
   const onClear = () => {
@@ -69,28 +76,6 @@ const useRandomNonogram = ({ difficulty }: UseRandomNonogram) => {
     })
   }, [setGame, setVal, setCurrentClearTime, difficulty])
 
-  // First Render
-  // useEffect(() => {
-  //   setGame({
-  //     solution: nonogram.solution,
-  //     rule: nonogram.rule,
-  //   })
-  //   setVal(Nonogram.getInitialValue(nonogram.length))
-  //   setCurrentClearTime({
-  //     startAt: new Date(),
-  //     finishedAt: null,
-  //   })
-  // }, [nonogram])
-
-  // Check finish condition
-  useEffect(() => {
-    if (!game) return
-    const clearedVal = Nonogram.clearMark(val)
-    if (Nonogram.isEqual(clearedVal, game.solution)) {
-      onFinished()
-    }
-  }, [val, game])
-
   return {
     game,
     val,
@@ -98,6 +83,7 @@ const useRandomNonogram = ({ difficulty }: UseRandomNonogram) => {
     currentClearTime,
     onClear,
     onRestart,
+    onFinished,
   }
 }
 

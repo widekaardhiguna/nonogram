@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import useRandomStageStore from "../_stores/useRandomStageStore"
 import { Rule, NodeVariant, Nonogram } from "@/components/Nonogram"
 
