@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react"
 import useRandomStageStore from "../_stores/useRandomStageStore"
 import { Difficulty } from "@/stores/stage-store/stage-store.types"
 import { Game } from "../_stores/random-stage-store.types"
+import { Rule } from "@/components/Nonogram"
 
 const difficultiesToLengthMap = {
   easy: 4,
@@ -14,7 +15,7 @@ const difficultiesToLengthMap = {
 
 const nonogramBalancer = 6
 
-type UseRandomNonogram = {
+export type UseRandomNonogram = {
   difficulty: Difficulty
 }
 
@@ -69,9 +70,17 @@ const useRandomNonogram = ({ difficulty }: UseRandomNonogram) => {
   }, [setGame, setVal, setCurrentClearTime, difficulty])
 
   // First Render
-  useEffect(() => {
-    onRestart()
-  }, [onRestart])
+  // useEffect(() => {
+  //   setGame({
+  //     solution: nonogram.solution,
+  //     rule: nonogram.rule,
+  //   })
+  //   setVal(Nonogram.getInitialValue(nonogram.length))
+  //   setCurrentClearTime({
+  //     startAt: new Date(),
+  //     finishedAt: null,
+  //   })
+  // }, [nonogram])
 
   // Check finish condition
   useEffect(() => {
