@@ -2,11 +2,8 @@
 
 import { useRouter } from "next/navigation"
 import { StagePageProps } from "./page"
-import game from "@/assets/stages/stages.json"
-import usePersistStore from "@/hooks/usePersistStore"
-import useStageStore from "@/stores/stage-store/useStageStore"
-import { finishedStages } from "@/stores/stage-store/stage-store-selector/finishedStages"
 import { PageSpinner } from "@/app/_components/PageSpinner/PageSpinner"
+import useStageGuard from "./_use-case/useStageGuard"
 
 type StageLayoutProps = StagePageProps & {
   children: React.ReactNode
@@ -15,20 +12,13 @@ type StageLayoutProps = StagePageProps & {
 export default function StageLayout({ children, params }: StageLayoutProps) {
   const { replace } = useRouter()
 
-  const stage = game[params.difficulties].find(
-    (stage) => stage.id === params.stage
-  )
+  const { currentStage, isHydrated, isOverStepping } = useStageGuard({
+    difficulty: params.difficulties,
+    stage: params.stage,
+  })
 
-  const finishedStagesTotal = usePersistStore(
-    useStageStore,
-    (state) => finishedStages(state.stages, params.difficulties).length
-  )
-
-  if (typeof finishedStagesTotal !== "number") return <PageSpinner />
-
-  const isOverStepping = parseInt(params.stage) > finishedStagesTotal + 1
-
-  if (!stage || isOverStepping) {
+  if (!isHydrated) return <PageSpinner />
+  if (!currentStage || isOverStepping) {
     replace(".")
     return
   }
