@@ -2,7 +2,6 @@
 
 import { Button, NonogramView } from "@/components"
 import { Fragment } from "react"
-import { DifficultiesPageProps } from "../page"
 import { IconChevronRight, IconSquareX } from "@tabler/icons-react"
 
 import Timer from "./_components/Timer"
@@ -13,6 +12,7 @@ import FinishedTime from "./_components/FinishedTime"
 import StageGrid from "./_components/StageGrid"
 import useInitStage from "./_use-case/useInitStage"
 import useCampaignNonogram from "./_use-case/useCampaignNonogram"
+import { DifficultiesPageProps } from "../(index)/_types/difficulty.type"
 
 export type StagePageProps = {
   params: DifficultiesPageProps["params"] & {

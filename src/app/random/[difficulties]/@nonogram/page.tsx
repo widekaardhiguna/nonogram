@@ -1,9 +1,11 @@
-import { DifficultiesPageProps } from "@/app/[difficulties]/page"
 import { Nonogram } from "@/components/Nonogram"
 import NonogramClient from "./_NonogramClient"
+import { Difficulty } from "@/stores/stage-store/stage-store.types"
 
 type RandomGamePageProps = {
-  params: DifficultiesPageProps["params"]
+  params: {
+    difficulties: Difficulty
+  }
 }
 
 const difficultiesToLengthMap = {

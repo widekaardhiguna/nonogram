@@ -1,5 +1,5 @@
 const LoadingCounterStage = () => {
-  return <div>Loading list...</div>
+  return <div className="text-white">Loading list...</div>
 }
 
 export default LoadingCounterStage

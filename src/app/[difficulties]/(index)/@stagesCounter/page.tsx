@@ -1,13 +1,7 @@
 "use client"
 
-import { Difficulty } from "@/stores/stage-store/stage-store.types"
+import { DifficultiesPageProps } from "../_types/difficulty.type"
 import useStageList from "../_use-case/useStageList"
-
-export type DifficultiesPageProps = {
-  params: {
-    difficulties: Difficulty
-  }
-}
 
 const StagesCounterPage = ({ params }: DifficultiesPageProps) => {
   const { totalFinishedStages, totalStage } = useStageList({

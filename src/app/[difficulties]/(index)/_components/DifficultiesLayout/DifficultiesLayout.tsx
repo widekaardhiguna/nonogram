@@ -1,7 +1,7 @@
 type DifficultiesLayoutProps = {
-  Top: React.ReactNode
-  Center: React.ReactNode
-  Bottom: React.ReactNode
+  Top?: React.ReactNode
+  Center?: React.ReactNode
+  Bottom?: React.ReactNode
 }
 
 const DifficultiesLayout = ({

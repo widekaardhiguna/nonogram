@@ -3,12 +3,7 @@
 import { Difficulty } from "@/stores/stage-store/stage-store.types"
 import useStageList from "../_use-case/useStageList"
 import { StageButton } from "../_components/StageButton"
-
-export type DifficultiesPageProps = {
-  params: {
-    difficulties: Difficulty
-  }
-}
+import { DifficultiesPageProps } from "../_types/difficulty.type"
 
 const StageListPage = ({ params }: DifficultiesPageProps) => {
   const { availableStages, isFinished } = useStageList({
