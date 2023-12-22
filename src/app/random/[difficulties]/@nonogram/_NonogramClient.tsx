@@ -1,30 +1,31 @@
 "use client"
 
-import { NonogramView } from "@/components"
-import { Difficulty } from "@/stores/stage-store/stage-store.types"
+import { NodeVariant, NonogramView } from "@/components"
 import useRandomNonogram from "../_use-case/useRandomNonogram"
 import useSyncStates, { UseSyncStates } from "../_use-case/useSyncStates"
-import LoadingNonogram from "../@nonogram/loading"
 
-type NonogramClientProps = {
-  nonogram: UseSyncStates["nonogram"]
+type NonogramClientProps = UseSyncStates & {
+  initialValue: NodeVariant[][]
 }
 
-const NonogramClient = ({ nonogram }: NonogramClientProps) => {
+const NonogramClient = ({
+  initialValue,
+  length,
+  rule,
+  solution,
+}: NonogramClientProps) => {
   useSyncStates({
-    nonogram,
+    length,
+    rule,
+    solution,
   })
 
   const { game, val, onChangeNonogram, onFinished } = useRandomNonogram()
 
-  if (!game) {
-    return <LoadingNonogram />
-  }
-
   return (
     <NonogramView
-      rules={game.rule}
-      value={val}
+      rules={game?.rule ?? rule}
+      value={val ?? initialValue}
       onChange={(val) => {
         onChangeNonogram(val)
         onFinished(val)

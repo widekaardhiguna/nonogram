@@ -25,11 +25,10 @@ const NonogramPage = ({ params }: RandomGamePageProps) => {
 
   return (
     <NonogramClient
-      nonogram={{
-        length: nonogram.length,
-        rule: nonogram.rule,
-        solution: nonogram.solution,
-      }}
+      length={nonogram.length}
+      rule={nonogram.rule}
+      solution={nonogram.solution}
+      initialValue={Nonogram.getInitialValue(nonogramLength)}
     />
   )
 }

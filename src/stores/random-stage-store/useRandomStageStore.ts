@@ -7,7 +7,7 @@ const defaultStates = {
     finishedAt: null,
   },
   game: null,
-  val: [],
+  val: null,
 }
 
 const useRandomStageStore = create<RandomStageStore>()((set) => ({

@@ -1,16 +1,14 @@
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import useRandomStageStore from "@/stores/random-stage-store/useRandomStageStore"
 import { Rule, NodeVariant, Nonogram } from "@/components/Nonogram"
 
 export type UseSyncStates = {
-  nonogram: {
-    length: number
-    solution: NodeVariant[][]
-    rule: Rule
-  }
+  length: number
+  solution: NodeVariant[][]
+  rule: Rule
 }
 
-const useSyncStates = ({ nonogram }: UseSyncStates) => {
+const useSyncStates = ({ length, rule, solution }: UseSyncStates) => {
   const setGame = useRandomStageStore((state) => state.setGame)
   const setVal = useRandomStageStore((state) => state.setVal)
   const setCurrentClearTime = useRandomStageStore(
@@ -19,15 +17,15 @@ const useSyncStates = ({ nonogram }: UseSyncStates) => {
 
   useEffect(() => {
     setGame({
-      solution: nonogram.solution,
-      rule: nonogram.rule,
+      solution: solution,
+      rule: rule,
     })
-    setVal(Nonogram.getInitialValue(nonogram.length))
+    setVal(Nonogram.getInitialValue(length))
     setCurrentClearTime({
       startAt: new Date(),
       finishedAt: null,
     })
-  }, [nonogram, setGame, setVal, setCurrentClearTime])
+  }, [length, rule, solution, setGame, setVal, setCurrentClearTime])
 }
 
 export default useSyncStates

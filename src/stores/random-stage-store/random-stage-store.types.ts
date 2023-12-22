@@ -18,6 +18,6 @@ export type RandomStageStore = {
   setCurrentClearTime: (currentClearTime: CurrentClearTime) => void
   game: Game | null
   setGame: (game: Game | null) => void
-  val: NodeVariant[][]
+  val: NodeVariant[][] | null
   setVal: (val: NodeVariant[][]) => void
 }
