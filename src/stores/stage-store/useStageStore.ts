@@ -114,7 +114,8 @@ const useStageStore = create<StageStore>()(
         }),
     }),
     {
-      name: "test@0.1",
+      name: "campaign-stages",
+      version: 1,
     }
   )
   // )
