@@ -27,6 +27,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta property="og:title" content="Nonogram online" />
+        <meta property="og:url" content="https://nono-gram.vercel.app" />
+        <meta
+          property="og:image"
+          content="https://nono-gram.vercel.app/thumbnail.png"
+        />
+        <meta property="og:image:width" content="1400" />
+        <meta property="og:image:height" content="900" />
+      </head>
       <body className={poppins.className}>
         <MainLayout
           TopLeft={
