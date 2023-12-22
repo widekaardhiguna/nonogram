@@ -1,4 +1,3 @@
-import { cx } from "class-variance-authority"
 import Link, { LinkProps } from "next/link"
 
 export type DifficultiesButtonProps = LinkProps & {

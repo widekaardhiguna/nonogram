@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components"
-import { cx } from "class-variance-authority"
 
 export type Mode = "campaign" | "random"
 

@@ -1,5 +1,3 @@
-import { cx } from "class-variance-authority"
-
 export type MainLayoutProps = {
   TopLeft: React.ReactNode
   TopRight: React.ReactNode

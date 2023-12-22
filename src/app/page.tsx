@@ -1,4 +1,3 @@
-import { cx } from "class-variance-authority"
 import NonogramShowcase from "./_components/NonogramShowcase"
 import DifficultiesSelection from "./_components/DifficultiesSelection"
 

@@ -1,9 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { cx } from "class-variance-authority"
-import ModeTab, { Mode } from "./ModeTab"
-import DifficultiesButton from "./DifficultiesButton"
+import ModeTab from "../ModeTab"
+import DifficultiesButton from "../DifficultiesButton"
 import useModeStore from "@/stores/mode-store/useModeStore"
 
 const DifficultiesSelection = () => {
